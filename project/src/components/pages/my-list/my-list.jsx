@@ -4,16 +4,11 @@ import { Link } from 'react-router-dom';
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
-import {myListMovies} from './my-list-data.jsx';
+import {myListMovies} from './my-list-data';
 import MyListItem from './my-list-item/my-list-item.jsx';
 
-function renderMyListMovies() {
-  return myListMovies.map((it) => (
-    <MyListItem movieInfo = {it} key={it}/>
-  ));
-}
-
 export default function MyList() {
+
   return (
     <>
       <div className="visually-hidden">
@@ -46,7 +41,7 @@ export default function MyList() {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <div className="catalog__films-list">
-            {renderMyListMovies()}
+            {myListMovies.map((it) => (<MyListItem movieInfo = {it} key={it}/>))}
           </div>
         </section>
 

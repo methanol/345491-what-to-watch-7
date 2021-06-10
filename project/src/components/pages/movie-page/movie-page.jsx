@@ -4,6 +4,19 @@ import { Link } from 'react-router-dom';
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
+import {activeMovieID} from '../my-list/my-list-data';
+
+const availableOptions = ['Overview', 'Details', 'Reviews'];
+
+function renderMovieOptions() {
+  const activeOptionIndex = 0;
+
+  return availableOptions.map((it, ind) => (
+    <li className= {ind === activeOptionIndex ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} key = {it}>
+      <a href="#" className="film-nav__link">{it}</a>
+    </li>
+  ));
+}
 
 export default function MoviePage() {
   return (
@@ -49,9 +62,11 @@ export default function MoviePage() {
 
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
+                  <Link to={`/player/${activeMovieID}`}>
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                  </Link>
                   <span>Play</span>
                 </button>
                 <button className="btn btn--list film-card__button" type="button">
@@ -60,7 +75,7 @@ export default function MoviePage() {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to='/films/123/review' className="btn film-card__button">
+                <Link to={`/films/${activeMovieID}/review`} className="btn film-card__button">
                   Add review
                 </Link>
               </div>
@@ -77,15 +92,7 @@ export default function MoviePage() {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
-                  </li>
+                  {renderMovieOptions()}
                 </ul>
               </nav>
 

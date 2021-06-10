@@ -36,3 +36,5 @@ export const myListMovies = [
     posterSource: 'img/shutter-island.jpg',
   },
 ];
+
+export const activeMovieID = 123;

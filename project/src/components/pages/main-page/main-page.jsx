@@ -6,8 +6,9 @@ import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
+import {activeMovieID} from '../my-list/my-list-data';
 
-const staticMoviesIDs = Array.from(Array(20).keys());
+const dumbMoviesIDs = Array.from(Array(20).keys());
 const movieGenres = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
 
 export default function MainPage({promoInfo}) {
@@ -49,7 +50,7 @@ export default function MainPage({promoInfo}) {
 
         <div className="film-card__wrap">
           <div className="film-card__info">
-            <Link to='/films/123'>
+            <Link to={`/films/${activeMovieID}`}>
               <div className="film-card__poster">
                 <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
               </div>
@@ -64,7 +65,7 @@ export default function MainPage({promoInfo}) {
 
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
-                  <Link to='/player/:id'>
+                  <Link to={`/player/${activeMovieID}`}>
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
@@ -91,11 +92,11 @@ export default function MainPage({promoInfo}) {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ul className="catalog__genres-list">
-            {getGenresList()}
+            {renderGenresList()}
           </ul>
 
           <div className="catalog__films-list">
-            {staticMoviesIDs.map((it) => <SingleMovieCard key = {it}/>)}
+            {dumbMoviesIDs.map((it) => <SingleMovieCard key = {it}/>)}
           </div>
 
           <div className="catalog__more">
@@ -108,7 +109,7 @@ export default function MainPage({promoInfo}) {
   );
 }
 
-function getGenresList() {
+function renderGenresList() {
   const activeGenreIndex = 0;
 
   return movieGenres.map((it, ind) => (
