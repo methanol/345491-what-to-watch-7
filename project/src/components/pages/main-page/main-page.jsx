@@ -1,10 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-import SingleMovieCard from '../single-movie-card/single-movie-card.jsx';
-import ButtonImage from '../button-image/button-image.jsx';
+import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card.jsx';
+import ButtonImage from '../../utils/button-image/button-image.jsx';
+import Logo from '../../common-blocks/logo/logo.jsx';
+import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
+import {activeMovieID} from '../my-list/my-list-data';
 
-const staticMoviesIDs = Array.from(Array(20).keys());
+const dumbMoviesIDs = Array.from(Array(20).keys());
 const movieGenres = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
 
 export default function MainPage({promoInfo}) {
@@ -26,9 +30,7 @@ export default function MainPage({promoInfo}) {
         <header className="page-header film-card__head">
           <div className="logo">
             <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
+              <Logo/>
             </a>
           </div>
 
@@ -39,16 +41,20 @@ export default function MainPage({promoInfo}) {
               </div>
             </li>
             <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
+              <Link to='/login' className="user-block__link">
+                Sign out
+              </Link>
             </li>
           </ul>
         </header>
 
         <div className="film-card__wrap">
           <div className="film-card__info">
-            <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
-            </div>
+            <Link to={`/films/${activeMovieID}`}>
+              <div className="film-card__poster">
+                <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              </div>
+            </Link>
 
             <div className="film-card__desc">
               <h2 className="film-card__title">{title}</h2>
@@ -59,16 +65,21 @@ export default function MainPage({promoInfo}) {
 
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
+                  <Link to={`/player/${activeMovieID}`}>
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                  </Link>
                   <span>Play</span>
                 </button>
+
                 <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
+                  <Link to='/mylist'>
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg>
+                  </Link>
+                  <span className="film-card__caption">My list</span>
                 </button>
               </div>
             </div>
@@ -81,37 +92,24 @@ export default function MainPage({promoInfo}) {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ul className="catalog__genres-list">
-            {getGenresList()}
+            {renderGenresList()}
           </ul>
 
           <div className="catalog__films-list">
-            {staticMoviesIDs.map((it) => <SingleMovieCard key = {it}/>)}
+            {dumbMoviesIDs.map((it) => <SingleMovieCard key = {it}/>)}
           </div>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
         </section>
-
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <PageFooter/>
       </div>
     </>
   );
 }
 
-function getGenresList() {
+function renderGenresList() {
   const activeGenreIndex = 0;
 
   return movieGenres.map((it, ind) => (
