@@ -2,17 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card.jsx';
+import MoviesList from '../../common-blocks/movies-list/movies-list';
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
-import {activeMovieID} from '../my-list/my-list-data';
 
-const dumbMoviesIDs = Array.from(Array(20).keys());
 const movieGenres = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
 
-export default function MainPage({promoInfo}) {
-  const {title, genre, releaseDate} = promoInfo;
+export default function MainPage({promoInfo, mockFilms}) {
 
   return (
     <>
@@ -22,7 +19,7 @@ export default function MainPage({promoInfo}) {
 
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={promoInfo.backgroundImage} alt={promoInfo.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -37,7 +34,9 @@ export default function MainPage({promoInfo}) {
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <Link to='/mylist'>
+                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                </Link>
               </div>
             </li>
             <li className="user-block__item">
@@ -50,35 +49,31 @@ export default function MainPage({promoInfo}) {
 
         <div className="film-card__wrap">
           <div className="film-card__info">
-            <Link to={`/films/${activeMovieID}`}>
-              <div className="film-card__poster">
-                <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
-              </div>
-            </Link>
+            <div className="film-card__poster">
+              <img src={promoInfo.posterImage} alt={`${promoInfo.name} poster`} width="218" height="327" />
+            </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{promoInfo.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{releaseDate}</span>
+                <span className="film-card__genre">{promoInfo.genre}</span>
+                <span className="film-card__year">{promoInfo.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <Link to={`/player/${activeMovieID}`}>
+                <Link className="film-card__button" to={`/player/${promoInfo.id}`}>
+                  <button className="btn btn--play film-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
-                  </Link>
-                  <span>Play</span>
-                </button>
+                    <span>Play</span>
+                  </button>
+                </Link>
 
                 <button className="btn btn--list film-card__button" type="button">
-                  <Link to='/mylist'>
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                  </Link>
+                  <svg viewBox="0 0 19 20" width="19" height="20">
+                    <use xlinkHref="#add"></use>
+                  </svg>
                   <span className="film-card__caption">My list</span>
                 </button>
               </div>
@@ -95,9 +90,7 @@ export default function MainPage({promoInfo}) {
             {renderGenresList()}
           </ul>
 
-          <div className="catalog__films-list">
-            {dumbMoviesIDs.map((it) => <SingleMovieCard key = {it}/>)}
-          </div>
+          <MoviesList mockFilms = {mockFilms}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
@@ -121,8 +114,16 @@ function renderGenresList() {
 
 MainPage.propTypes = {
   promoInfo: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.number.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    posterImage: PropTypes.string.isRequired,
+    released: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
   }).isRequired,
+  mockFilms: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
 };

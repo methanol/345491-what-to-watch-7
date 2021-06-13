@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
-import {myListMovies} from './my-list-data';
-import MyListItem from './my-list-item/my-list-item.jsx';
+import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
 
-export default function MyList() {
+export default function MyList(props) {
+  const {mockFilms} = props;
 
   return (
     <>
@@ -41,7 +42,7 @@ export default function MyList() {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <div className="catalog__films-list">
-            {myListMovies.map((it) => (<MyListItem movieInfo = {it} key={it}/>))}
+            {mockFilms.map((it) => (<SingleMovieCard id = {it.id} previewImg = {it.preview_image} name = {it.name} key={it.id}/>))}
           </div>
         </section>
 
@@ -50,3 +51,11 @@ export default function MyList() {
     </>
   );
 }
+
+MyList.propTypes = {
+  mockFilms: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+};
