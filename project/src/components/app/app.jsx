@@ -10,16 +10,20 @@ import ReviewPage from '../pages/review-page/review-page.jsx';
 import Player from '../pages/player/player.jsx';
 import NotFoundScreen from '../pages/not-found-page/not-found-page.jsx';
 
-function App({promoInfo}) {
+function App({promoInfo, mockFilms}) {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path = '/' exact render={() => <MainPage promoInfo = {promoInfo}/>}/>
+        <Route path = '/' exact render={() => <MainPage promoInfo = {promoInfo} mockFilms = {mockFilms}/>}/>
         <Route path = '/login' exact component={SignIn}/>
-        <Route path = '/mylist' exact component={MyList}/>
-        <Route path = '/films/:id' exact component={MoviePage}/>
-        <Route path = '/films/:id/review' exact component={ReviewPage}/>
-        <Route path = '/player/:id' exact component={Player}/>
+        <Route path = '/mylist' exact render={() => <MyList mockFilms = {mockFilms}/>}/>
+        <Route path = '/films/:id' exact>
+          <MoviePage mockFilms = {mockFilms}/>
+        </Route>
+        <Route path = '/films/:id/review' exact render={() => <ReviewPage mockFilms = {mockFilms}/>}/>
+        <Route path = '/player/:id' exact>
+          <Player mockFilms = {mockFilms}/>
+        </Route>
         <Route>
           <NotFoundScreen/>
         </Route>
@@ -30,10 +34,18 @@ function App({promoInfo}) {
 
 App.propTypes = {
   promoInfo: PropTypes.shape({
-    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
-    releaseDate: PropTypes.number.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    posterImage: PropTypes.string.isRequired,
+    released: PropTypes.number.isRequired,
+    id: PropTypes.number.isRequired,
   }).isRequired,
+  mockFilms: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
 };
 
 export default App;

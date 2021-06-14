@@ -1,17 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import ButtonImage from '../../utils/button-image/button-image.jsx';
+import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 
-export default function Player() {
-  return (
+export default function Player(props) {
+  const params = useParams();
+  const {mockFilms} = props;
+  const currentMovie = mockFilms.find((it) => Number(it.id) === Number(params.id));
+
+  return currentMovie ? (
     <>
       <div className="visually-hidden">
         <ButtonImage/>
       </div>
 
       <div className="player">
-        <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+        <video src="#" className="player__video" poster={currentMovie.background_image}></video>
         <Link to='/'>
           <button type="button" className="player__exit">Exit</button>
         </Link>
@@ -32,7 +38,7 @@ export default function Player() {
               </svg>
               <span>Play</span>
             </button>
-            <div className="player__name">Transpotting</div>
+            <div className="player__name">{currentMovie.name}</div>
 
             <button type="button" className="player__full-screen">
               <svg viewBox="0 0 27 27" width="27" height="27">
@@ -44,5 +50,13 @@ export default function Player() {
         </div>
       </div>
     </>
-  );
+  ) : <NotFoundScreen/>;
 }
+
+Player.propTypes = {
+  mockFilms: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+};
