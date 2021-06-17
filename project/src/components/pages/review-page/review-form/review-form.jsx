@@ -24,7 +24,7 @@ export default function ReviewForm() {
 
   const renderRatingList = (it) => (
     <>
-      <input className="rating__input" id={`star-${it}`} type="radio" name="rating" value={it} onChange = {setUserRating}/>
+      <input className="rating__input" id={`star-${it}`} type="radio" name="rating" value={it} onChange = {setUserRating} key={it.id}/>
       <label className="rating__label" htmlFor={`star-${it}`}>Rating {it}</label>
     </>
   );

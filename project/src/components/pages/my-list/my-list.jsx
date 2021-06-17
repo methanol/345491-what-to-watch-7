@@ -6,6 +6,7 @@ import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
+import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 
 export default function MyList(props) {
   const {mockFilms} = props;
@@ -42,7 +43,7 @@ export default function MyList(props) {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <div className="catalog__films-list">
-            {mockFilms.map((it) => (<SingleMovieCard id = {it.id} previewImg = {it.preview_image} name = {it.name} key={it.id}/>))}
+            {mockFilms.map((it) => (<SingleMovieCard id = {it.id} previewImage = {it.previewImage} name = {it.name} key={it.id}/>))}
           </div>
         </section>
 
@@ -54,8 +55,6 @@ export default function MyList(props) {
 
 MyList.propTypes = {
   mockFilms: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
+    singleMovieProp.movieProps,
   ).isRequired,
 };
