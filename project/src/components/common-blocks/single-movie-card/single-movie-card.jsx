@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default function SingleMovieCard(props) {
-  const {name, previewImg, id, onMouseHover} = props;
+  const {name, previewImage, id, onMouseHover} = props;
 
   const setActiveMovie = () => onMouseHover ? onMouseHover(id) : null;
 
@@ -11,7 +11,7 @@ export default function SingleMovieCard(props) {
     <article className="small-film-card catalog__films-card" onMouseOver = {setActiveMovie}>
       <Link to={`/films/${id}`}>
         <div className="small-film-card__image">
-          <img src={previewImg} alt={name} width="280" height="175" />
+          <img src={previewImage} alt={name} width="280" height="175" />
         </div>
       </Link>
       <h3 className="small-film-card__title">
@@ -23,7 +23,7 @@ export default function SingleMovieCard(props) {
 
 SingleMovieCard.propTypes = {
   name: PropTypes.string.isRequired,
-  previewImg: PropTypes.string.isRequired,
+  previewImage: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   onMouseHover: PropTypes.func,
 };

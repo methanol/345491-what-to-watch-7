@@ -7,6 +7,8 @@ import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
+import {getScoreEvaluation} from '../../utils/functions';
+import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 
 const availableOptions = ['Overview', 'Details', 'Reviews'];
 
@@ -18,27 +20,6 @@ function renderMovieOptions() {
       <a href="#" className="film-nav__link">{it}</a>
     </li>
   ));
-}
-
-function getScoreEvaluation(score) {
-  let verdict = '';
-
-  if (score < 3) {
-    verdict = 'Bad';
-  }
-  else if (score >= 3 && score < 5) {
-    verdict = 'Normal';
-  }
-  else if (score >= 5 && score < 8) {
-    verdict = 'Good';
-  }
-  else if (score >= 8 && score < 10) {
-    verdict = 'Very good';
-  } else {
-    verdict = 'Awesome';
-  }
-
-  return verdict;
 }
 
 export default function MoviePage(props) {
@@ -56,7 +37,7 @@ export default function MoviePage(props) {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={currentMovie.background_image} alt={currentMovie.name} />
+            <img src={currentMovie.backgroundImage} alt={currentMovie.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -116,7 +97,7 @@ export default function MoviePage(props) {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={currentMovie.poster_image} alt={currentMovie.name} width="218" height="327" />
+              <img src={currentMovie.posterImage} alt={currentMovie.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -130,7 +111,7 @@ export default function MoviePage(props) {
                 <div className="film-rating__score">{currentMovie.rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">{getScoreEvaluation(currentMovie.rating)}</span>
-                  <span className="film-rating__count">{currentMovie.scores_count} ratings</span>
+                  <span className="film-rating__count">{currentMovie.scoresCount} ratings</span>
                 </p>
               </div>
 
@@ -139,7 +120,7 @@ export default function MoviePage(props) {
 
                 <p className="film-card__director"><strong>Director: {currentMovie.director}</strong></p>
 
-                <p className="film-card__starring"><strong>Starring: {currentMovie.starring.join(',')}</strong></p>
+                <p className="film-card__starring"><strong>Starring: {currentMovie.starring.join(', ')}</strong></p>
               </div>
             </div>
           </div>
@@ -151,7 +132,7 @@ export default function MoviePage(props) {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            {similarMovies.map((it) => <SingleMovieCard name = {it.name} id = {it.id} previewImg = {it.preview_image} key = {it.id}/>)}
+            {similarMovies.map((it) => <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id}/>)}
           </div>
         </section>
         <PageFooter/>
@@ -162,8 +143,6 @@ export default function MoviePage(props) {
 
 MoviePage.propTypes = {
   mockFilms: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
+    singleMovieProp.movieProps,
   ).isRequired,
 };
