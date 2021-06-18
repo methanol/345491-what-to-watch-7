@@ -18,6 +18,39 @@ export const mockPromo = {
   'preview_video_link':'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
 };
 
+export const mockReviews = [
+  {
+    'id': 1,
+    'user': {
+      'id': 4,
+      'name': 'Kate Muir',
+    },
+    'rating': 8.9,
+    'comment': 'Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director`s funniest and most exquisitely designed movies in years.',
+    'date': '2019-05-08T14:13:56.569Z',
+  },
+  {
+    'id': 2,
+    'user': {
+      'id': 5,
+      'name': 'Bill Goodykoontz',
+    },
+    'rating': 8.0,
+    'comment': 'Anderson`s films are too precious for some, but for those of us willing to lose ourselves in them, they are a delight. `The Grand Budapest Hotel` is no different, except that he has added a hint of gravitas to the mix, improving the recipe.',
+    'date': '2019-05-08T14:13:56.569Z',
+  },
+  {
+    'id': 3,
+    'user': {
+      'id': 6,
+      'name': 'Amanda Greever',
+    },
+    'rating': 7.2,
+    'comment': 'I didn`t find it amusing, and while I can appreciate the creativity, it`s an hour and 40 minutes I wish I could take back.',
+    'date': '2019-05-08T14:13:56.569Z',
+  },
+];
+
 export const mockFilms = [
   {
     'name':'Macbeth',
@@ -43,7 +76,7 @@ export const mockFilms = [
     'poster_image':'https://7.react.pages.academy/static/film/poster/Aviator.jpg',
     'preview_image':'https://7.react.pages.academy/static/film/preview/aviator.jpg','background_image':'https://7.react.pages.academy/static/film/background/Aviator.jpg',
     'background_color':'#D6CDAF',
-    'description':'A biopic depicting the early years of legendary Director and aviator Howard Hughes&apos; career from the late 1920s to the mid 1940s.',
+    'description':'A biopic depicting the early years of legendary Director and aviator Howard Hughes` career from the late 1920s to the mid 1940s.',
     'rating':9.8,
     'scores_count':307174,
     'director':'Martin Scorsese',
@@ -100,7 +133,7 @@ export const mockFilms = [
     'preview_image':'https://7.react.pages.academy/static/film/preview/dardjeeling_limited.jpg',
     'background_image':'https://7.react.pages.academy/static/film/background/Dardjeeling_Limited.jpg',
     'background_color':'#AD9F8B',
-    'description':'A year after their father&apos;s funeral, three brothers travel across India by train in an attempt to bond with each other.',
+    'description':'A year after their father`s funeral, three brothers travel across India by train in an attempt to bond with each other.',
     'rating':3.6,
     'scores_count':165106,
     'director':'Wes Anderson',

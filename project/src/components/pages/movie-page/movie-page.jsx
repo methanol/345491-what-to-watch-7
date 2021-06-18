@@ -7,20 +7,8 @@ import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
-import {getScoreEvaluation} from '../../utils/functions';
+import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
-
-const availableOptions = ['Overview', 'Details', 'Reviews'];
-
-function renderMovieOptions() {
-  const activeOptionIndex = 0;
-
-  return availableOptions.map((it, ind) => (
-    <li className= {ind === activeOptionIndex ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} key = {it}>
-      <a href="#" className="film-nav__link">{it}</a>
-    </li>
-  ));
-}
 
 export default function MoviePage(props) {
   const params = useParams();
@@ -31,10 +19,10 @@ export default function MoviePage(props) {
   return (currentMovie) ? (
     <>
       <div className="visually-hidden">
-        <ButtonImage/>
+        <ButtonImage currentMovie = {currentMovie}/>
       </div>
 
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style = {{background: currentMovie.backgroundColor}}>
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img src={currentMovie.backgroundImage} alt={currentMovie.name} />
@@ -99,30 +87,7 @@ export default function MoviePage(props) {
             <div className="film-card__poster film-card__poster--big">
               <img src={currentMovie.posterImage} alt={currentMovie.name} width="218" height="327" />
             </div>
-
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  {renderMovieOptions()}
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{currentMovie.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{getScoreEvaluation(currentMovie.rating)}</span>
-                  <span className="film-rating__count">{currentMovie.scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{currentMovie.description}</p>
-
-                <p className="film-card__director"><strong>Director: {currentMovie.director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {currentMovie.starring.join(', ')}</strong></p>
-              </div>
-            </div>
+            {currentMovie ? <MoviesTabs currentMovie={currentMovie}/>  : null}
           </div>
         </div>
       </section>

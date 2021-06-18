@@ -55,6 +55,7 @@ App.propTypes = {
       genre: PropTypes.string.isRequired,
       released: PropTypes.number.isRequired,
       id: PropTypes.number.isRequired,
+      runTime: PropTypes.number.isRequired,
       starring: PropTypes.arrayOf(
         PropTypes.string.isRequired,
       ).isRequired,

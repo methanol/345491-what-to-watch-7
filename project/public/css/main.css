@@ -639,8 +639,7 @@ main {
   position: relative;
   z-index: 1;
   color: #EEE5B5;
-  padding-bottom: 78px;
-  background: #E1B0B2; }
+  padding-bottom: 78px;}
   .film-card--full {
     padding-bottom: 45px;
     min-height: 100vh; }
@@ -839,6 +838,7 @@ main {
       flex-wrap: wrap; }
 
 .film-nav__item {
+  cursor: pointer;
   margin-right: 35px; }
   .film-nav__item--active .film-nav__link {
     font-weight: bold; }
