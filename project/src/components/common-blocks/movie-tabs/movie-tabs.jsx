@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import OverviewTab from './overview-tab';
 import DetailTab from './detail-tab';
 import ReviewTab from './review-tab';
+import './style.css';
+
+const classNames = require('classnames');
 
 const availableOptions = ['Overview', 'Details', 'Reviews'];
 
@@ -14,7 +17,7 @@ export default function MoviesTabs(props) {
   function renderMovieOptions() {
 
     return availableOptions.map((it, ind) => (
-      <li className= {ind === activeOptionIndex ? 'film-nav__item film-nav__item--active' : 'film-nav__item'} key = {it} onClick = {() => setActiveOption(ind)}>
+      <li className= {classNames('film-nav__item', { 'film-nav__item--active': ind === activeOptionIndex })} key = {it} onClick = {() => setActiveOption(ind)}>
         <a className="film-nav__link">{it}</a>
       </li>
     ));
