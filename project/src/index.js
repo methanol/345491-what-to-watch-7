@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {mockFilms, mockPromo} from './mocks/films.js';
+import camelize from 'camelize';
 
-const camelize = require('camelize');
 const camelizedMockFilms = camelize(mockFilms);
 
 ReactDOM.render(

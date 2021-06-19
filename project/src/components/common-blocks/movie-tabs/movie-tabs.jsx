@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import OverviewTab from './overview-tab';
 import DetailTab from './detail-tab';
 import ReviewTab from './review-tab';
 import './style.css';
-
-const classNames = require('classnames');
 
 const availableOptions = ['Overview', 'Details', 'Reviews'];
 
