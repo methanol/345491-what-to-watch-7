@@ -21,7 +21,7 @@ export default function ReviewPage(props) {
       <section className="film-card film-card--full">
         <div className="film-card__header">
           <div className="film-card__bg">
-            <img src={currentMovie.background_image} alt={currentMovie.name} />
+            <img src={currentMovie.backgroundImage} alt={currentMovie.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -57,7 +57,7 @@ export default function ReviewPage(props) {
           </header>
 
           <div className="film-card__poster film-card__poster--small">
-            <img src={currentMovie.poster_image} alt={`${currentMovie.name} poster`} width="218" height="327" />
+            <img src={currentMovie.posterImage} alt={`${currentMovie.name} poster`} width="218" height="327" />
           </div>
         </div>
 
