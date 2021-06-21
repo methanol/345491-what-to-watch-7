@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import MoviesList from '../../common-blocks/movies-list/movies-list';
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
+import GenresList from '../../common-blocks/genres-list/genres-list';
 
-const movieGenres = ['All genres', 'Comedies', 'Crime', 'Documentary', 'Dramas', 'Horror', 'Kids & Family', 'Romance', 'Sci-Fi', 'Thrillers'];
-
-export default function MainPage({promoInfo, mockFilms}) {
+export function MainPage({promoInfo, mockFilms, currentFilmsProp}) {
 
   return (
     <>
@@ -85,13 +85,8 @@ export default function MainPage({promoInfo, mockFilms}) {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <ul className="catalog__genres-list">
-            {renderGenresList()}
-          </ul>
-
-          <MoviesList mockFilms = {mockFilms}/>
-
+          <GenresList movies = {mockFilms}/>
+          <MoviesList mockFilms = {currentFilmsProp}/>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
@@ -102,15 +97,11 @@ export default function MainPage({promoInfo, mockFilms}) {
   );
 }
 
-function renderGenresList() {
-  const activeGenreIndex = 0;
+const mapStateToProps = (state) => ({
+  currentFilmsProp: state.currentFilms,
+});
 
-  return movieGenres.map((it, ind) => (
-    <li className= {ind === activeGenreIndex ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'} key = {it}>
-      <a href="#" className="catalog__genres-link">{it}</a>
-    </li>
-  ));
-}
+export default connect(mapStateToProps, null)(MainPage);
 
 MainPage.propTypes = {
   promoInfo: PropTypes.shape({
@@ -122,6 +113,11 @@ MainPage.propTypes = {
     id: PropTypes.number.isRequired,
   }).isRequired,
   mockFilms: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  currentFilmsProp: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }).isRequired,
