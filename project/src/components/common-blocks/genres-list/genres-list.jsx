@@ -14,18 +14,13 @@ export function GenresList(props) {
   const actualGenres = initGenres.concat(movies.map((it) => it.genre).filter((it, ind, arr) => arr.indexOf(it) === ind));
   const activeGenreIndex = actualGenres.indexOf(currentGenreProp);
 
-  function renderGenresList() {
-
-    return actualGenres.map((it, ind) => (
-      <li className= {classNames('catalog__genres-item', { 'catalog__genres-item--active': ind === activeGenreIndex })} key = {it}>
-        <a className="catalog__genres-link"  onClick = {() => switchGenreAction(it)}>{it}</a>
-      </li>
-    ));
-  }
-
   return (
     <ul className="catalog__genres-list">
-      {renderGenresList()}
+      {actualGenres.map((it, ind) => (
+        <li className= {classNames('catalog__genres-item', { 'catalog__genres-item--active': ind === activeGenreIndex })} key = {it}>
+          <a className="catalog__genres-link"  onClick = {() => switchGenreAction(it)}>{it}</a>
+        </li>
+      ))}
     </ul>
   );
 }

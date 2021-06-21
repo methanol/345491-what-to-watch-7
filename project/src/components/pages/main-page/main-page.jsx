@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect}  from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -8,8 +8,20 @@ import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import GenresList from '../../common-blocks/genres-list/genres-list';
+import ShowMore from '../../common-blocks/show-more/show-more';
+import {showMoreMovies, resetMoviesList} from '../../../store/actions';
 
-export function MainPage({promoInfo, mockFilms, currentFilmsProp}) {
+export function MainPage(props) {
+
+  const {promoInfo, mockFilms, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp} = props;
+  const handleShowMoreClick = () => {
+    showMoreAction();
+  };
+
+  useEffect(() => {
+    resetMoviesListAction();
+  },
+  []);
 
   return (
     <>
@@ -86,10 +98,10 @@ export function MainPage({promoInfo, mockFilms, currentFilmsProp}) {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenresList movies = {mockFilms}/>
-          <MoviesList mockFilms = {currentFilmsProp}/>
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <MoviesList mockFilms = {shownFilmsProp}/>
+          <ShowMore>
+            {(moviesOnPageProp < currentFilmsProp.length) ? <button className="catalog__button" type="button" onClick = {handleShowMoreClick}>Show more</button> : null}
+          </ShowMore>
         </section>
         <PageFooter/>
       </div>
@@ -99,9 +111,20 @@ export function MainPage({promoInfo, mockFilms, currentFilmsProp}) {
 
 const mapStateToProps = (state) => ({
   currentFilmsProp: state.currentFilms,
+  shownFilmsProp: state.shownFilms,
+  moviesOnPageProp: state.moviesOnPage,
 });
 
-export default connect(mapStateToProps, null)(MainPage);
+const mapDispatchToProps = (dispatch) => ({
+  showMoreAction() {
+    dispatch(showMoreMovies());
+  },
+  resetMoviesListAction() {
+    dispatch(resetMoviesList());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
 
 MainPage.propTypes = {
   promoInfo: PropTypes.shape({
@@ -122,4 +145,12 @@ MainPage.propTypes = {
       name: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
+  shownFilmsProp: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+  showMoreAction: PropTypes.func.isRequired,
+  resetMoviesListAction: PropTypes.func.isRequired,
+  moviesOnPageProp: PropTypes.number.isRequired,
 };
