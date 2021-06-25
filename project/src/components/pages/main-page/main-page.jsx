@@ -13,7 +13,7 @@ import {showMoreMovies, resetMoviesList} from '../../../store/actions';
 
 export function MainPage(props) {
 
-  const {promoInfo, mockFilms, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp} = props;
+  const {promoInfo, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp} = props;
   const handleShowMoreClick = () => {
     showMoreAction();
   };
@@ -97,8 +97,8 @@ export function MainPage(props) {
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresList movies = {mockFilms}/>
-          <MoviesList mockFilms = {shownFilmsProp}/>
+          <GenresList/>
+          <MoviesList allFilms = {shownFilmsProp}/>
           <ShowMore>
             {(moviesOnPageProp < currentFilmsProp.length) ? <button className="catalog__button" type="button" onClick = {handleShowMoreClick}>Show more</button> : null}
           </ShowMore>
@@ -135,11 +135,6 @@ MainPage.propTypes = {
     released: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
-  mockFilms: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
   currentFilmsProp: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,

@@ -51,7 +51,7 @@ export const mockReviews = [
   },
 ];
 
-export const mockFilms = [
+export const allFilms = [
   {
     'name':'We need to talk about Kevin',
     'poster_image':'https://7.react.pages.academy/static/film/poster/We_need_to_talk_about_Kevin.jpg',
