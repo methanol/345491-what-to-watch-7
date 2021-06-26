@@ -1,7 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
-
-import {mockReviews} from '../../../mocks/films';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 function renderReviews(reviews) {
 
@@ -25,13 +25,34 @@ function renderReviews(reviews) {
   ));
 }
 
-export default function ReviewTab() {
+export function ReviewTab(props) {
+
+  const {reviewsProp} = props;
 
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {renderReviews(mockReviews)}
+        {renderReviews(reviewsProp)}
       </div>
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  reviewsProp: state.reviews,
+});
+
+export default connect(mapStateToProps, null)(ReviewTab);
+
+ReviewTab.propTypes = {
+  reviewsProp: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      rating: PropTypes.number.isRequired,
+      comment: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
+};
+
+

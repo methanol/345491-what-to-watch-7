@@ -9,7 +9,7 @@ import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 
 export default function MyList(props) {
-  const {mockFilms} = props;
+  const {allFilms} = props;
 
   return (
     <>
@@ -43,7 +43,7 @@ export default function MyList(props) {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <div className="catalog__films-list">
-            {mockFilms.map((it) => (<SingleMovieCard id = {it.id} previewImage = {it.previewImage} name = {it.name} key={it.id}/>))}
+            {allFilms.map((it) => (<SingleMovieCard id = {it.id} previewImage = {it.previewImage} name = {it.name} key={it.id}/>))}
           </div>
         </section>
 
@@ -54,7 +54,7 @@ export default function MyList(props) {
 }
 
 MyList.propTypes = {
-  mockFilms: PropTypes.arrayOf(
+  allFilms: PropTypes.arrayOf(
     singleMovieProp.movieProps,
   ).isRequired,
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
@@ -10,11 +11,10 @@ import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-
 import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 
-export default function MoviePage(props) {
+export function MoviePage(props) {
   const params = useParams();
-  const {mockFilms} = props;
-  const similarMovies = mockFilms.slice(4, 8);
-  const currentMovie = mockFilms.find((it) => Number(it.id) === Number(params.id));
+  const {allFilms, similarFilmsProp} = props;
+  const currentMovie = allFilms.find((it) => Number(it.id) === Number(params.id));
 
   return (currentMovie) ? (
     <>
@@ -87,7 +87,7 @@ export default function MoviePage(props) {
             <div className="film-card__poster film-card__poster--big">
               <img src={currentMovie.posterImage} alt={currentMovie.name} width="218" height="327" />
             </div>
-            {currentMovie ? <MoviesTabs currentMovie={currentMovie}/>  : null}
+            {currentMovie ? <MoviesTabs currentMovie={currentMovie}/> : null}
           </div>
         </div>
       </section>
@@ -97,7 +97,7 @@ export default function MoviePage(props) {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            {similarMovies.map((it) => <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id}/>)}
+            {similarFilmsProp.map((it) => <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id}/>)}
           </div>
         </section>
         <PageFooter/>
@@ -106,8 +106,17 @@ export default function MoviePage(props) {
   ) : <NotFoundScreen/>;
 }
 
+const mapStateToProps = (state) => ({
+  similarFilmsProp: state.similarFilms,
+});
+
+export default connect(mapStateToProps, null)(MoviePage);
+
 MoviePage.propTypes = {
-  mockFilms: PropTypes.arrayOf(
+  allFilms: PropTypes.arrayOf(
+    singleMovieProp.movieProps,
+  ).isRequired,
+  similarFilmsProp: PropTypes.arrayOf(
     singleMovieProp.movieProps,
   ).isRequired,
 };

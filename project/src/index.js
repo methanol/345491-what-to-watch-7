@@ -1,25 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import camelize from 'camelize';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+import {createAPI} from './api';
 
 import {movieReducer} from './store/reducer';
-import {mockFilms, mockPromo} from './mocks/films.js';
+import {fetchMoviesList, fetchPromoMovie} from './store/api-actions';
+// import {requireAuthorization} from './store/actions';
+// import {AuthorizationStatus} from './components/utils/constants';
+
+// const api = createAPI(
+//   () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
+// );
+
+const api = createAPI();
 
 const store = createStore(
   movieReducer,
-  composeWithDevTools(),
+  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
 );
 
-const camelizedMockFilms = camelize(mockFilms);
+store.dispatch(fetchPromoMovie());
+store.dispatch(fetchMoviesList());
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store ={store}>
-      <App promoInfo = {mockPromo} mockFilms = {camelizedMockFilms}/>
+      <App/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

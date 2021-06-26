@@ -9,8 +9,8 @@ import ReviewForm from './review-form/review-form';
 
 export default function ReviewPage(props) {
   const params = useParams();
-  const {mockFilms} = props;
-  const currentMovie = mockFilms.find((it) => Number(it.id) === Number(params.id));
+  const {allFilms} = props;
+  const currentMovie = allFilms.find((it) => Number(it.id) === Number(params.id));
 
   return currentMovie ? (
     <>
@@ -71,7 +71,7 @@ export default function ReviewPage(props) {
 }
 
 ReviewPage.propTypes = {
-  mockFilms: PropTypes.arrayOf(
+  allFilms: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
     }).isRequired,

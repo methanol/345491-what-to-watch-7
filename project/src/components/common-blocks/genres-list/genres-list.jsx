@@ -8,10 +8,10 @@ import singleMovieProp from '../single-movie-card/single-movie.prop';
 import './style.css';
 
 export function GenresList(props) {
-  const {movies, currentGenreProp, switchGenreAction} = props;
+  const {moviesProp, currentGenreProp, switchGenreAction} = props;
 
   const initGenres = ['All genres'];
-  const actualGenres = initGenres.concat(movies.map((it) => it.genre).filter((it, ind, arr) => arr.indexOf(it) === ind));
+  const actualGenres = initGenres.concat(moviesProp.map((it) => it.genre).filter((it, ind, arr) => arr.indexOf(it) === ind));
   const activeGenreIndex = actualGenres.indexOf(currentGenreProp);
 
   return (
@@ -27,6 +27,7 @@ export function GenresList(props) {
 
 const mapStateToProps = (state) => ({
   currentGenreProp: state.currentGenre,
+  moviesProp: state.allFilms,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -36,7 +37,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 GenresList.propTypes = {
-  movies: PropTypes.arrayOf(
+  moviesProp: PropTypes.arrayOf(
     singleMovieProp.movieProps,
   ).isRequired,
   currentGenreProp: PropTypes.string.isRequired,
