@@ -64,7 +64,7 @@ export function requireAuthorization (status) {
   };
 }
 
-export function logout () {
+export function userLogout () {
   return {
     type: ActionType.LOGOUT,
   };

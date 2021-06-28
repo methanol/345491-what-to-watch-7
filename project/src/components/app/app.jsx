@@ -10,14 +10,15 @@ import MoviePage from '../pages/movie-page/movie-page.jsx';
 import ReviewPage from '../pages/review-page/review-page.jsx';
 import Player from '../pages/player/player.jsx';
 import NotFoundScreen from '../pages/not-found-page/not-found-page.jsx';
-import {AppRoute} from '../utils/constants';
+import {AppRoute, isCheckedAuth} from '../utils/constants';
 import LoadingScreen from '../common-blocks/loading-screen/loading-screen';
+import PrivateRoute from '../utils/private-route/private-route';
 
 function App(props) {
 
-  const {promoFilm, allFilms, isDataLoaded} = props;
+  const {promoFilm, allFilms, isDataLoaded, authorizationStatus} = props;
 
-  if (!isDataLoaded) {
+  if (!isDataLoaded || !isCheckedAuth(authorizationStatus)) {
     return (
       <LoadingScreen />
     );
@@ -28,11 +29,11 @@ function App(props) {
       <Switch>
         <Route path = '/' exact render={() => <MainPage promoInfo = {promoFilm}/>}/>
         <Route path = {AppRoute.LOGIN} exact component={SignIn}/>
-        <Route path = {AppRoute.MY_LIST} exact render={() => <MyList allFilms = {allFilms}/>}/>
+        <PrivateRoute path = {AppRoute.MY_LIST} allFilms = {allFilms} exact component={MyList} />
         <Route path = {AppRoute.FILM} exact>
           <MoviePage allFilms = {allFilms}/>
         </Route>
-        <Route path = {AppRoute.FILM_REVIEW} exact render={() => <ReviewPage allFilms = {allFilms}/>}/>
+        <PrivateRoute path = {AppRoute.FILM_REVIEW} allFilms = {allFilms} exact component={ReviewPage} />
         <Route path = {AppRoute.FILM_PLAYER} exact>
           <Player allFilms = {allFilms}/>
         </Route>
@@ -73,12 +74,14 @@ App.propTypes = {
     }).isRequired,
   ).isRequired,
   isDataLoaded: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   allFilms: state.currentFilms,
   promoFilm: state.promoFilm,
   isDataLoaded: state.isDataLoaded,
+  authorizationStatus: state.authorizationStatus,
 });
 
 export default connect(mapStateToProps, null)(App);

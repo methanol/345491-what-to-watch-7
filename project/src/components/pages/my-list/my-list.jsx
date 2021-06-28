@@ -7,6 +7,7 @@ import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
+import AuthBlock from '../../common-blocks/auth-block/auth-block';
 
 export default function MyList(props) {
   const {allFilms} = props;
@@ -26,17 +27,7 @@ export default function MyList(props) {
           </div>
 
           <h1 className="page-title user-page__title">My list</h1>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <AuthBlock/>
         </header>
 
         <section className="catalog">

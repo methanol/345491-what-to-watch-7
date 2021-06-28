@@ -6,6 +6,7 @@ import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import ReviewForm from './review-form/review-form';
+import AuthBlock from '../../common-blocks/auth-block/auth-block';
 
 export default function ReviewPage(props) {
   const params = useParams();
@@ -43,17 +44,7 @@ export default function ReviewPage(props) {
                 </li>
               </ul>
             </nav>
-
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <AuthBlock/>
           </header>
 
           <div className="film-card__poster film-card__poster--small">

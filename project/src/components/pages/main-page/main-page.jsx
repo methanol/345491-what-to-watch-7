@@ -9,6 +9,7 @@ import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import GenresList from '../../common-blocks/genres-list/genres-list';
 import ShowMore from '../../common-blocks/show-more/show-more';
+import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
 
 export function MainPage(props) {
@@ -42,21 +43,7 @@ export function MainPage(props) {
               <Logo/>
             </a>
           </div>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <Link to='/mylist'>
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </Link>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to='/login' className="user-block__link">
-                Sign out
-              </Link>
-            </li>
-          </ul>
+          <AuthBlock/>
         </header>
 
         <div className="film-card__wrap">

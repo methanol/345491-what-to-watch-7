@@ -8,21 +8,20 @@ import thunk from 'redux-thunk';
 import {createAPI} from './api';
 
 import {movieReducer} from './store/reducer';
-import {fetchMoviesList, fetchPromoMovie} from './store/api-actions';
-// import {requireAuthorization} from './store/actions';
-// import {AuthorizationStatus} from './components/utils/constants';
+import {fetchMoviesList, fetchPromoMovie, checkAuth} from './store/api-actions';
+import {requireAuthorization} from './store/actions';
+import {AuthorizationStatus} from './components/utils/constants';
 
-// const api = createAPI(
-//   () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
-// );
-
-const api = createAPI();
+const api = createAPI(
+  () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
+);
 
 const store = createStore(
   movieReducer,
   composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
 );
 
+store.dispatch(checkAuth());
 store.dispatch(fetchPromoMovie());
 store.dispatch(fetchMoviesList());
 

@@ -38,12 +38,6 @@ export function ReviewTab(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  reviewsProp: state.reviews,
-});
-
-export default connect(mapStateToProps, null)(ReviewTab);
-
 ReviewTab.propTypes = {
   reviewsProp: PropTypes.arrayOf(
     PropTypes.shape({
@@ -54,5 +48,11 @@ ReviewTab.propTypes = {
     }).isRequired,
   ).isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  reviewsProp: state.reviews,
+});
+
+export default connect(mapStateToProps, null)(ReviewTab);
 
 

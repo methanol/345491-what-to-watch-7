@@ -33,3 +33,6 @@ export const APIRoute = {
   GET_LOGIN: '/login',
   DELETE_LOGIN: '/logout',
 };
+
+export const isCheckedAuth = (authorizationStatus) =>
+  authorizationStatus !== AuthorizationStatus.UNKNOWN;

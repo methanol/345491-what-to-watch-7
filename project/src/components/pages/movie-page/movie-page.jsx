@@ -10,6 +10,7 @@ import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
 import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
+import AuthBlock from '../../common-blocks/auth-block/auth-block';
 
 export function MoviePage(props) {
   const params = useParams();
@@ -36,19 +37,7 @@ export function MoviePage(props) {
                 <Logo/>
               </Link>
             </div>
-
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <Link to='/mylist'>
-                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                  </Link>
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <AuthBlock/>
           </header>
 
           <div className="film-card__wrap">
@@ -106,12 +95,6 @@ export function MoviePage(props) {
   ) : <NotFoundScreen/>;
 }
 
-const mapStateToProps = (state) => ({
-  similarFilmsProp: state.similarFilms,
-});
-
-export default connect(mapStateToProps, null)(MoviePage);
-
 MoviePage.propTypes = {
   allFilms: PropTypes.arrayOf(
     singleMovieProp.movieProps,
@@ -120,3 +103,10 @@ MoviePage.propTypes = {
     singleMovieProp.movieProps,
   ).isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  similarFilmsProp: state.similarFilms,
+});
+
+export default connect(mapStateToProps, null)(MoviePage);
+

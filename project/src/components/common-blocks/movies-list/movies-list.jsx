@@ -37,6 +37,14 @@ export function MoviesList(props) {
   );
 }
 
+MoviesList.propTypes = {
+  allFilms: PropTypes.arrayOf(
+    singleMovieProp.movieProps,
+  ).isRequired,
+  showSimilarAction: PropTypes.func.isRequired,
+  showReviewsAction: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => ({
   showSimilarAction(id) {
     dispatch(fetchSimilarMovies(id));
@@ -45,13 +53,5 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(fetchMovieReviews(id));
   },
 });
-
-MoviesList.propTypes = {
-  allFilms: PropTypes.arrayOf(
-    singleMovieProp.movieProps,
-  ).isRequired,
-  showSimilarAction: PropTypes.func.isRequired,
-  showReviewsAction: PropTypes.func.isRequired,
-};
 
 export default connect(null, mapDispatchToProps)(MoviesList);
