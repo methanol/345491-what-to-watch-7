@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 export const ActionType = {
   SWITCH_GENRE: 'switchGenre',
   MORE_MOVIES: 'moreMovies',
@@ -8,6 +10,7 @@ export const ActionType = {
   LOAD_MOVIE_REVIEWS: 'data/loadReviews',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
+  NETWORK_ERROR: 'data/networkError',
 };
 
 export function switchGenre (genre) {
@@ -67,5 +70,23 @@ export function requireAuthorization (status) {
 export function userLogout () {
   return {
     type: ActionType.LOGOUT,
+  };
+}
+
+export function handleNetworkError() {
+  return function(dispatch) {
+    dispatch({
+      type: ActionType.NETWORK_ERROR,
+    });
+
+    toast.error('error', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 }

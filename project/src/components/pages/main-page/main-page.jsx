@@ -12,9 +12,12 @@ import ShowMore from '../../common-blocks/show-more/show-more';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
 
+// import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export function MainPage(props) {
 
-  const {promoInfo, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp} = props;
+  const {promoInfo, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp } = props;
   const handleShowMoreClick = () => {
     showMoreAction();
   };
@@ -92,6 +95,17 @@ export function MainPage(props) {
         </section>
         <PageFooter/>
       </div>
+      {/* <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      /> */}
     </>
   );
 }
@@ -109,6 +123,9 @@ const mapDispatchToProps = (dispatch) => ({
   resetMoviesListAction() {
     dispatch(resetMoviesList());
   },
+  // errorAction() {
+  //   dispatch(handleNetworkError());
+  // },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
@@ -134,5 +151,6 @@ MainPage.propTypes = {
   ).isRequired,
   showMoreAction: PropTypes.func.isRequired,
   resetMoviesListAction: PropTypes.func.isRequired,
+  // errorAction: PropTypes.func.isRequired,
   moviesOnPageProp: PropTypes.number.isRequired,
 };

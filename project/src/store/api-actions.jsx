@@ -24,9 +24,8 @@ export const fetchMovieReviews = (id) => (dispatch, _getState, api) => (
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.GET_LOGIN)
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {
-
-    })
+    // .catch(() => {dispatch(handleNetworkError());
+    // })
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
