@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
+
+// import { ToastContainer } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 import MainPage from '../pages/main-page/main-page.jsx';
 import SignIn from '../pages/sign-in/sign-in.jsx';
@@ -13,6 +16,7 @@ import NotFoundScreen from '../pages/not-found-page/not-found-page.jsx';
 import {AppRoute, isCheckedAuth} from '../utils/constants';
 import LoadingScreen from '../common-blocks/loading-screen/loading-screen';
 import PrivateRoute from '../utils/private-route/private-route';
+import browserHistory from '../../browser-history';
 
 function App(props) {
 
@@ -25,10 +29,10 @@ function App(props) {
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route path = '/' exact render={() => <MainPage promoInfo = {promoFilm}/>}/>
-        <Route path = {AppRoute.LOGIN} exact component={SignIn}/>
+        <Route path = {AppRoute.ROOT} exact render={() => <MainPage promoInfo = {promoFilm}/>}/>
+        <Route path = {AppRoute.LOGIN} exact render={() => <SignIn/>}/>
         <PrivateRoute path = {AppRoute.MY_LIST} allFilms = {allFilms} exact component={MyList} />
         <Route path = {AppRoute.FILM} exact>
           <MoviePage allFilms = {allFilms}/>
@@ -42,6 +46,17 @@ function App(props) {
         </Route>
       </Switch>
     </BrowserRouter>
+    // <ToastContainer
+    //   position="top-right"
+    //   autoClose={5000}
+    //   hideProgressBar={false}
+    //   newestOnTop={false}
+    //   closeOnClick
+    //   rtl={false}
+    //   pauseOnFocusLoss
+    //   draggable
+    //   pauseOnHover
+    // />
   );
 }
 
@@ -78,7 +93,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  allFilms: state.currentFilms,
+  allFilms: state.allFilms,
   promoFilm: state.promoFilm,
   isDataLoaded: state.isDataLoaded,
   authorizationStatus: state.authorizationStatus,

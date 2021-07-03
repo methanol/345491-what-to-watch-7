@@ -11,6 +11,7 @@ import {movieReducer} from './store/reducer';
 import {fetchMoviesList, fetchPromoMovie, checkAuth} from './store/api-actions';
 import {requireAuthorization} from './store/actions';
 import {AuthorizationStatus} from './components/utils/constants';
+import {redirect, replace} from './store/middleware/redirect';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),
@@ -18,7 +19,9 @@ const api = createAPI(
 
 const store = createStore(
   movieReducer,
-  composeWithDevTools(applyMiddleware(thunk.withExtraArgument(api))),
+  composeWithDevTools(
+    applyMiddleware(thunk.withExtraArgument(api), redirect, replace),
+  ),
 );
 
 store.dispatch(checkAuth());

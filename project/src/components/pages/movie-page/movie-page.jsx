@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -11,11 +11,18 @@ import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-
 import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
+import {fetchSimilarMovies, fetchMovieReviews} from '../../../store/api-actions';
+import {AuthorizationStatus} from '../../utils/constants';
 
 export function MoviePage(props) {
   const params = useParams();
-  const {allFilms, similarFilmsProp} = props;
+  const {allFilms, similarFilmsStateProp, showSimilarAction, showReviewsAction, authorizationStatusStateProp} = props;
   const currentMovie = allFilms.find((it) => Number(it.id) === Number(params.id));
+
+  useEffect(() => {
+    showSimilarAction(params.id);
+    showReviewsAction(params.id);
+  }, [params.id]);
 
   return (currentMovie) ? (
     <>
@@ -63,9 +70,10 @@ export function MoviePage(props) {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`/films/${params.id}/review`} className="btn film-card__button">
-                  Add review
-                </Link>
+                {authorizationStatusStateProp === AuthorizationStatus.AUTH ?
+                  <Link to={`/films/${params.id}/review`} className="btn film-card__button">
+                    Add review
+                  </Link> : null}
               </div>
             </div>
           </div>
@@ -86,7 +94,7 @@ export function MoviePage(props) {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            {similarFilmsProp.map((it) => <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id}/>)}
+            {similarFilmsStateProp.map((it) => <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id}/>)}
           </div>
         </section>
         <PageFooter/>
@@ -99,14 +107,27 @@ MoviePage.propTypes = {
   allFilms: PropTypes.arrayOf(
     singleMovieProp.movieProps,
   ).isRequired,
-  similarFilmsProp: PropTypes.arrayOf(
+  similarFilmsStateProp: PropTypes.arrayOf(
     singleMovieProp.movieProps,
   ).isRequired,
+  showSimilarAction: PropTypes.func.isRequired,
+  showReviewsAction: PropTypes.func.isRequired,
+  authorizationStatusStateProp: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  similarFilmsProp: state.similarFilms,
+  similarFilmsStateProp: state.similarFilms,
+  authorizationStatusStateProp: state.authorizationStatus,
 });
 
-export default connect(mapStateToProps, null)(MoviePage);
+const mapDispatchToProps = (dispatch) => ({
+  showSimilarAction(id) {
+    dispatch(fetchSimilarMovies(id));
+  },
+  showReviewsAction(id) {
+    dispatch(fetchMovieReviews(id));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
 

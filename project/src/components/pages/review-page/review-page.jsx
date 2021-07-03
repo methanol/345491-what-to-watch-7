@@ -53,7 +53,7 @@ export default function ReviewPage(props) {
         </div>
 
         <div className="add-review">
-          <ReviewForm/>
+          <ReviewForm id = {params.id}/>
         </div>
 
       </section>

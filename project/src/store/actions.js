@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 
 export const ActionType = {
   SWITCH_GENRE: 'switchGenre',
@@ -8,9 +8,12 @@ export const ActionType = {
   LOAD_PROMO_MOVIE: 'data/loadMoviesPromo',
   LOAD_SIMILAR_MOVIES: 'data/loadSimilarMovies',
   LOAD_MOVIE_REVIEWS: 'data/loadReviews',
+  POST_REVIEW: 'data/postReview',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   NETWORK_ERROR: 'data/networkError',
+  REDIRECT_TO_ROUTE: 'history/redirectToRoute',
+  REPLACE_ROUTE: 'history/replaceRoute',
 };
 
 export function switchGenre (genre) {
@@ -67,26 +70,47 @@ export function requireAuthorization (status) {
   };
 }
 
+export function sendReview (review) {
+  return {
+    type: ActionType.POST_REVIEW,
+    payload: review,
+  };
+}
+
 export function userLogout () {
   return {
     type: ActionType.LOGOUT,
   };
 }
 
-export function handleNetworkError() {
-  return function(dispatch) {
-    dispatch({
-      type: ActionType.NETWORK_ERROR,
-    });
-
-    toast.error('error', {
-      position: 'top-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
+export function redirectToRoute (url) {
+  return {
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   };
 }
+
+export function replaceRoute (url) {
+  return {
+    type: ActionType.REPLACE_ROUTE,
+    payload: url,
+  };
+}
+
+// export function handleNetworkError() {
+//   return function(dispatch) {
+//     dispatch({
+//       type: ActionType.NETWORK_ERROR,
+//     });
+
+//     toast.error('error', {
+//       position: 'top-right',
+//       autoClose: 5000,
+//       hideProgressBar: false,
+//       closeOnClick: true,
+//       pauseOnHover: true,
+//       draggable: true,
+//       progress: undefined,
+//     });
+//   };
+// }

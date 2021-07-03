@@ -1,5 +1,5 @@
-import React , {useRef, useEffect} from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, {useRef} from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
@@ -7,21 +7,13 @@ import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import {login} from '../../../store/api-actions';
-import {AuthorizationStatus} from '../../utils/constants';
 
 export function SignIn(props) {
 
-  const {onSubmitAction, authorizationStatusStateProp} = props;
+  const {onSubmitAction} = props;
 
   const loginRef = useRef();
   const passwordRef = useRef();
-  const history = useHistory();
-
-  useEffect(() => {
-    if (authorizationStatusStateProp === AuthorizationStatus.AUTH) {
-      history.replace('/');
-    }
-  });
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -75,7 +67,6 @@ export function SignIn(props) {
 
 SignIn.propTypes = {
   onSubmitAction: PropTypes.func.isRequired,
-  authorizationStatusStateProp: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({

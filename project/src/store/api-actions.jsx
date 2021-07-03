@@ -1,5 +1,6 @@
-import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout} from './actions';
-import {APIRoute, AuthorizationStatus} from '../components/utils/constants';
+import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout, replaceRoute, sendReview, redirectToRoute} from './actions';
+import {APIRoute, AuthorizationStatus, AppRoute} from '../components/utils/constants';
+import { toast } from 'react-toastify';
 
 export const fetchMoviesList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.GET_ALL_FILMS)
@@ -24,18 +25,25 @@ export const fetchMovieReviews = (id) => (dispatch, _getState, api) => (
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.GET_LOGIN)
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    // .catch(() => {dispatch(handleNetworkError());
-    // })
+    .catch(() => toast('error'))
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.POST_LOGIN, {email, password})
     .then(({data}) => localStorage.setItem('token', data.token))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(replaceRoute(AppRoute.ROOT)))
+);
+
+export const postReview = ({filmId, comment, rating}) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.POST_COMMENTS}/${filmId}`, {comment, rating})
+    .then(() => dispatch(redirectToRoute(`${APIRoute.GET_FILM}/${filmId}`)))
+    .catch((err) => dispatch(sendReview(err)))
 );
 
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.DELETE_LOGIN)
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(userLogout()))
+    .then(() => dispatch(replaceRoute(AppRoute.ROOT)))
 );
