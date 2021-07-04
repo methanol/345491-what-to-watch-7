@@ -47,7 +47,7 @@ AuthBlock.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatusStateProp: state.authorizationStatus,
+  authorizationStatusStateProp: state.auth.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

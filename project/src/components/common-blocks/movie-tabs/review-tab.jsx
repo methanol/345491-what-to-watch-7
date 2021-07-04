@@ -1,7 +1,8 @@
 import React from 'react';
 import Moment from 'react-moment';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+
+import {useSelector} from 'react-redux';
+import {getReviews} from '../../../store/selector';
 
 function renderReviews(reviews) {
 
@@ -25,34 +26,19 @@ function renderReviews(reviews) {
   ));
 }
 
-export function ReviewTab(props) {
+export function ReviewTab() {
 
-  const {reviewsProp} = props;
+  const reviews = useSelector(getReviews);
 
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {renderReviews(reviewsProp)}
+        {renderReviews(reviews)}
       </div>
     </div>
   );
 }
 
-ReviewTab.propTypes = {
-  reviewsProp: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      rating: PropTypes.number.isRequired,
-      comment: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  reviewsProp: state.reviews,
-});
-
-export default connect(mapStateToProps, null)(ReviewTab);
+export default ReviewTab;
 
 

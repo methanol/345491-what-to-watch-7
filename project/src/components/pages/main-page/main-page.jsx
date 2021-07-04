@@ -11,6 +11,7 @@ import GenresList from '../../common-blocks/genres-list/genres-list';
 import ShowMore from '../../common-blocks/show-more/show-more';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
+import {createGenreSelector, createShownMoviesSelector} from '../../../store/selector';
 
 export function MainPage(props) {
 
@@ -97,9 +98,9 @@ export function MainPage(props) {
 }
 
 const mapStateToProps = (state) => ({
-  currentFilmsProp: state.currentFilms,
-  shownFilmsProp: state.shownFilms,
-  moviesOnPageProp: state.moviesOnPage,
+  currentFilmsProp: createGenreSelector(state),
+  shownFilmsProp: createShownMoviesSelector(state),
+  moviesOnPageProp: state.movie.moviesOnPage,
 });
 
 const mapDispatchToProps = (dispatch) => ({

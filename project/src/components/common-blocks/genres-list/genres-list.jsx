@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {switchGenre} from '../../../store/actions';
 
 import singleMovieProp from '../single-movie-card/single-movie.prop';
+import {getAllFilms} from '../../../store/selector';
 import './style.css';
 
 export function GenresList(props) {
@@ -26,8 +27,8 @@ export function GenresList(props) {
 }
 
 const mapStateToProps = (state) => ({
-  currentGenreProp: state.currentGenre,
-  moviesProp: state.allFilms,
+  currentGenreProp: state.movie.currentGenre,
+  moviesProp: getAllFilms(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

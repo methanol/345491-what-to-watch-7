@@ -1,4 +1,5 @@
 // import { toast } from 'react-toastify';
+import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
   SWITCH_GENRE: 'switchGenre',
@@ -16,86 +17,47 @@ export const ActionType = {
   REPLACE_ROUTE: 'history/replaceRoute',
 };
 
-export function switchGenre (genre) {
-  return {
-    type: ActionType.SWITCH_GENRE,
-    payload: {genre},
-  };
-}
+export const switchGenre = createAction(ActionType.SWITCH_GENRE, (genre) => ({
+  payload: {genre},
+}));
 
-export function showMoreMovies () {
-  return {
-    type: ActionType.MORE_MOVIES,
-  };
-}
+export const showMoreMovies = createAction(ActionType.MORE_MOVIES);
 
-export function resetMoviesList () {
-  return {
-    type: ActionType.RESET_MOVIES_LIST,
-  };
-}
+export const resetMoviesList = createAction(ActionType.RESET_MOVIES_LIST);
 
-export function loadMoviesList (movies) {
-  return {
-    type: ActionType.LOAD_MOVIES_LIST,
-    payload: movies,
-  };
-}
+export const loadMoviesList = createAction(ActionType.LOAD_MOVIES_LIST, (movies) => ({
+  payload: movies,
+}));
 
-export function loadPromoMovie (movie) {
-  return {
-    type: ActionType.LOAD_PROMO_MOVIE,
-    payload: movie,
-  };
-}
+export const loadPromoMovie = createAction(ActionType.LOAD_PROMO_MOVIE, (movie) => ({
+  payload: movie,
+}));
 
-export function loadSimilarMovie (movies) {
-  return {
-    type: ActionType.LOAD_SIMILAR_MOVIES,
-    payload: movies,
-  };
-}
+export const loadSimilarMovie = createAction(ActionType.LOAD_SIMILAR_MOVIES, (movies) => ({
+  payload: movies,
+}));
 
-export function loadMovieReview (reviews) {
-  return {
-    type: ActionType.LOAD_MOVIE_REVIEWS,
-    payload: reviews,
-  };
-}
+export const loadMovieReview = createAction(ActionType.LOAD_MOVIE_REVIEWS, (reviews) => ({
+  payload: reviews,
+}));
 
-export function requireAuthorization (status) {
-  return {
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  };
-}
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
+  payload: status,
+}));
 
-export function sendReview (review) {
-  return {
-    type: ActionType.POST_REVIEW,
-    payload: review,
-  };
-}
+export const sendReview = createAction(ActionType.POST_REVIEW, (review) => ({
+  payload: review,
+}));
 
-export function userLogout () {
-  return {
-    type: ActionType.LOGOUT,
-  };
-}
+export const userLogout = createAction(ActionType.LOGOUT);
 
-export function redirectToRoute (url) {
-  return {
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  };
-}
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
+  payload: url,
+}));
 
-export function replaceRoute (url) {
-  return {
-    type: ActionType.REPLACE_ROUTE,
-    payload: url,
-  };
-}
+export const replaceRoute = createAction(ActionType.REPLACE_ROUTE, (url) => ({
+  payload: url,
+}));
 
 // export function handleNetworkError() {
 //   return function(dispatch) {

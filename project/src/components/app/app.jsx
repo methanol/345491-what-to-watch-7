@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 // import { ToastContainer } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
@@ -17,10 +16,14 @@ import {AppRoute, isCheckedAuth} from '../utils/constants';
 import LoadingScreen from '../common-blocks/loading-screen/loading-screen';
 import PrivateRoute from '../utils/private-route/private-route';
 import browserHistory from '../../browser-history';
+import {getAllFilms, getPromoFilm, getDataLoaded, getAuthorizationStatus} from '../../store/selector';
 
-function App(props) {
+function App() {
 
-  const {promoFilm, allFilms, isDataLoaded, authorizationStatus} = props;
+  const allFilms = useSelector(getAllFilms);
+  const promoFilm = useSelector(getPromoFilm);
+  const isDataLoaded = useSelector(getDataLoaded);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   if (!isDataLoaded || !isCheckedAuth(authorizationStatus)) {
     return (
@@ -60,43 +63,4 @@ function App(props) {
   );
 }
 
-App.propTypes = {
-  promoFilm: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    posterImage: PropTypes.string.isRequired,
-    released: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-  }).isRequired,
-  allFilms: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      posterImage: PropTypes.string.isRequired,
-      previewImage: PropTypes.string.isRequired,
-      backgroundImage: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      scoresCount: PropTypes.number.isRequired,
-      director: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      released: PropTypes.number.isRequired,
-      id: PropTypes.number.isRequired,
-      runTime: PropTypes.number.isRequired,
-      starring: PropTypes.arrayOf(
-        PropTypes.string.isRequired,
-      ).isRequired,
-    }).isRequired,
-  ).isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  allFilms: state.allFilms,
-  promoFilm: state.promoFilm,
-  isDataLoaded: state.isDataLoaded,
-  authorizationStatus: state.authorizationStatus,
-});
-
-export default connect(mapStateToProps, null)(App);
+export default App;
