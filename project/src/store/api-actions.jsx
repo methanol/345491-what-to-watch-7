@@ -1,4 +1,4 @@
-import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout, replaceRoute, sendReview, redirectToRoute} from './actions';
+import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout, replaceRoute, sendReview, redirectToRoute, loadFavoriteMovies, updateFavoriteMovies} from './actions';
 import {APIRoute, AuthorizationStatus, AppRoute} from '../components/utils/constants';
 import { toast } from 'react-toastify';
 
@@ -20,6 +20,25 @@ export const fetchSimilarMovies = (id) => (dispatch, _getState, api) => (
 export const fetchMovieReviews = (id) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.GET_COMMENTS}/${id}`)
     .then(({data}) => dispatch(loadMovieReview(data)))
+);
+
+export const fetchFavoriteMovies = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.GET_FAVORITE)
+    .then(({data}) => dispatch(loadFavoriteMovies(data)))
+);
+
+// export const postFavoriteMovie = (id, status) => (dispatch, _getState, api) => (
+//   api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`)
+//     .then(({data}) => dispatch(updateFavoriteMovies(data)))
+// );
+
+export const postFavoriteMovie = (id, status) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`)
+    .then(({data}) => dispatch(updateFavoriteMovies(data))),
+  api.get(APIRoute.GET_PROMO)
+    .then(({data}) => dispatch(loadPromoMovie(data))),
+  api.get(APIRoute.GET_ALL_FILMS)
+    .then(({data}) => dispatch(loadMoviesList(data)))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (

@@ -27,7 +27,7 @@ export const APIRoute = {
   GET_SIMILAR_FILMS: '/films/:id/similar',
   GET_PROMO: '/promo',
   GET_FAVORITE: '/favorite',
-  POST_FAVORITE: '/favorite/:film_id/:status',
+  POST_FAVORITE: '/favorite',
   GET_COMMENTS: '/comments',
   POST_COMMENTS: '/comments',
   POST_LOGIN: '/login',

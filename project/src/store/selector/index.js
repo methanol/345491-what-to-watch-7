@@ -5,6 +5,7 @@ export const getAuthorizationStatus = (state) => state.auth.authorizationStatus;
 export const getPromoFilm = (state) => state.data.promoFilm;
 export const getSimilarFilms = (state) => state.data.similarFilms;
 export const getReviews = (state) => state.data.reviews;
+export const getFavorites = (state) => state.data.favoriteMovies;
 
 export const getAllFilms = (state) => state.movie.allFilms;
 export const getDataLoaded = (state) => state.movie.isDataLoaded;

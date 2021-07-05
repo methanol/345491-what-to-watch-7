@@ -1,16 +1,31 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import {useSelector, useDispatch} from 'react-redux';
 
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
-import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
+import {getFavorites, getAuthorizationStatus} from '../../../store/selector';
+import {fetchFavoriteMovies} from '../../../store//api-actions';
+import {AuthorizationStatus} from '../../utils/constants';
 
-export default function MyList(props) {
-  const {allFilms} = props;
+export default function MyList() {
+
+  const allFilms = useSelector(getFavorites);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  const dispatch = useDispatch();
+  const loadFavoriteMoviesAction = () => {
+    dispatch(fetchFavoriteMovies());
+  };
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      loadFavoriteMoviesAction();
+    }
+  });
 
   return (
     <>
@@ -43,9 +58,3 @@ export default function MyList(props) {
     </>
   );
 }
-
-MyList.propTypes = {
-  allFilms: PropTypes.arrayOf(
-    singleMovieProp.movieProps,
-  ).isRequired,
-};

@@ -11,7 +11,7 @@ import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-
 import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
-import {fetchSimilarMovies, fetchMovieReviews} from '../../../store/api-actions';
+import {fetchSimilarMovies, fetchMovieReviews, postFavoriteMovie, fetchFavoriteMovies} from '../../../store/api-actions';
 import {AuthorizationStatus} from '../../utils/constants';
 import {getSimilarFilms, getAuthorizationStatus} from '../../../store/selector';
 
@@ -30,11 +30,23 @@ export function MoviePage(props) {
   const showReviewsAction = (id) => {
     dispatch(fetchMovieReviews(id));
   };
+  const postFavoriteAction = (id, status) => {
+    dispatch(postFavoriteMovie(id, status));
+  };
+  const loadFavoriteMoviesAction = () => {
+    dispatch(fetchFavoriteMovies());
+  };
 
   useEffect(() => {
     showSimilarAction(params.id);
     showReviewsAction(params.id);
   }, [params.id]);
+
+  const handleFavoriteClick = () => {
+    const isFavorite = currentMovie.isFavorite ? 0 : 1;
+    postFavoriteAction(currentMovie.id, isFavorite);
+    loadFavoriteMoviesAction();
+  };
 
   return (currentMovie) ? (
     <>
@@ -76,10 +88,14 @@ export function MoviePage(props) {
                     <span>Play</span>
                   </button>
                 </Link>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+                <button className="btn btn--list film-card__button" type="button" onClick = {handleFavoriteClick}>
+                  {!currentMovie.isFavorite ?
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg> :
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#in-list"></use>
+                    </svg>}
                   <span>My list</span>
                 </button>
                 {authorizationStatus === AuthorizationStatus.AUTH ?
