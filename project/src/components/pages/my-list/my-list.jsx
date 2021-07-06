@@ -25,7 +25,7 @@ export default function MyList() {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       loadFavoriteMoviesAction();
     }
-  });
+  }, []);
 
   return (
     <>

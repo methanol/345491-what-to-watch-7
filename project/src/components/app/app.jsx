@@ -2,8 +2,8 @@ import React from 'react';
 import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
-// import { ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import MainPage from '../pages/main-page/main-page.jsx';
 import SignIn from '../pages/sign-in/sign-in.jsx';
@@ -48,18 +48,18 @@ function App() {
           <NotFoundScreen/>
         </Route>
       </Switch>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </BrowserRouter>
-    // <ToastContainer
-    //   position="top-right"
-    //   autoClose={5000}
-    //   hideProgressBar={false}
-    //   newestOnTop={false}
-    //   closeOnClick
-    //   rtl={false}
-    //   pauseOnFocusLoss
-    //   draggable
-    //   pauseOnHover
-    // />
   );
 }
 
