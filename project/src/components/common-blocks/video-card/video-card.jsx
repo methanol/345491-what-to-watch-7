@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function VideoCard(props) {
 
-  const {previewImage, id, videoSourse, onCardHover, onCardLeave, handleClick} = props;
+  const {previewImage, id, videoSourse, onCardHover = () => {}, onCardLeave = () => {}, handleClick = () => {}} = props;
   const videoRef = useRef(null);
   let playingTimeout;
 
@@ -14,10 +14,6 @@ export default function VideoCard(props) {
       videoRef.current.play();
     }, 1000);
   };
-
-  // const handleMovieClick = () => {
-  //   console.log('click video');
-  // };
 
   const stopActiveMovie = () => {
     handleClick();

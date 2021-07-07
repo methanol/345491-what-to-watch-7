@@ -7,6 +7,7 @@ export const UserVerdicts = {
 };
 
 export const AppRoute = {
+  ROOT: '/',
   LOGIN: '/login',
   MY_LIST: '/mylist',
   FILM: '/films/:id',
@@ -22,14 +23,17 @@ export const AuthorizationStatus = {
 
 export const APIRoute = {
   GET_ALL_FILMS: '/films',
-  GET_FILM: '/films/:id',
+  GET_FILM: '/films',
   GET_SIMILAR_FILMS: '/films/:id/similar',
   GET_PROMO: '/promo',
   GET_FAVORITE: '/favorite',
-  POST_FAVORITE: '/favorite/:film_id/:status',
+  POST_FAVORITE: '/favorite',
   GET_COMMENTS: '/comments',
-  POST_COMMENTS: '/comments/:film_id',
+  POST_COMMENTS: '/comments',
   POST_LOGIN: '/login',
   GET_LOGIN: '/login',
   DELETE_LOGIN: '/logout',
 };
+
+export const isCheckedAuth = (authorizationStatus) =>
+  authorizationStatus !== AuthorizationStatus.UNKNOWN;

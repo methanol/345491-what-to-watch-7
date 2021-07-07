@@ -9,11 +9,14 @@ import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import GenresList from '../../common-blocks/genres-list/genres-list';
 import ShowMore from '../../common-blocks/show-more/show-more';
+import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
+import {postFavoriteMovie, fetchPromoMovie} from '../../../store/api-actions';
+import {createGenreSelector, createShownMoviesSelector, getMoviesOnPage, getAuthorizationStatus} from '../../../store/selector';
 
 export function MainPage(props) {
 
-  const {promoInfo, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp} = props;
+  const {promoInfo, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp, postFavoriteAction, fetchPromoMovieAction } = props;
   const handleShowMoreClick = () => {
     showMoreAction();
   };
@@ -22,6 +25,12 @@ export function MainPage(props) {
     resetMoviesListAction();
   },
   []);
+
+  const handleFavoriteClick = () => {
+    const isFavorite = promoInfo.isFavorite ? 0 : 1;
+    postFavoriteAction(promoInfo.id, isFavorite);
+    fetchPromoMovieAction();
+  };
 
   return (
     <>
@@ -42,21 +51,7 @@ export function MainPage(props) {
               <Logo/>
             </a>
           </div>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <Link to='/mylist'>
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </Link>
-              </div>
-            </li>
-            <li className="user-block__item">
-              <Link to='/login' className="user-block__link">
-                Sign out
-              </Link>
-            </li>
-          </ul>
+          <AuthBlock/>
         </header>
 
         <div className="film-card__wrap">
@@ -82,10 +77,14 @@ export function MainPage(props) {
                   </button>
                 </Link>
 
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+                <button className="btn btn--list film-card__button" type="button" onClick = {handleFavoriteClick}>
+                  {!promoInfo.isFavorite ?
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg> :
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#in-list"></use>
+                    </svg>}
                   <span className="film-card__caption">My list</span>
                 </button>
               </div>
@@ -110,9 +109,10 @@ export function MainPage(props) {
 }
 
 const mapStateToProps = (state) => ({
-  currentFilmsProp: state.currentFilms,
-  shownFilmsProp: state.shownFilms,
-  moviesOnPageProp: state.moviesOnPage,
+  currentFilmsProp: createGenreSelector(state),
+  shownFilmsProp: createShownMoviesSelector(state),
+  moviesOnPageProp: getMoviesOnPage(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -121,6 +121,12 @@ const mapDispatchToProps = (dispatch) => ({
   },
   resetMoviesListAction() {
     dispatch(resetMoviesList());
+  },
+  postFavoriteAction(id, status) {
+    dispatch(postFavoriteMovie(id, status));
+  },
+  fetchPromoMovieAction() {
+    dispatch(fetchPromoMovie());
   },
 });
 
@@ -134,6 +140,7 @@ MainPage.propTypes = {
     posterImage: PropTypes.string.isRequired,
     released: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
   }).isRequired,
   currentFilmsProp: PropTypes.arrayOf(
     PropTypes.shape({
@@ -147,5 +154,7 @@ MainPage.propTypes = {
   ).isRequired,
   showMoreAction: PropTypes.func.isRequired,
   resetMoviesListAction: PropTypes.func.isRequired,
+  postFavoriteAction: PropTypes.func.isRequired,
+  fetchPromoMovieAction: PropTypes.func.isRequired,
   moviesOnPageProp: PropTypes.number.isRequired,
 };

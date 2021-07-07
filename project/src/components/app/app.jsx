@@ -1,7 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import MainPage from '../pages/main-page/main-page.jsx';
 import SignIn from '../pages/sign-in/sign-in.jsx';
@@ -10,29 +12,35 @@ import MoviePage from '../pages/movie-page/movie-page.jsx';
 import ReviewPage from '../pages/review-page/review-page.jsx';
 import Player from '../pages/player/player.jsx';
 import NotFoundScreen from '../pages/not-found-page/not-found-page.jsx';
-import {AppRoute} from '../utils/constants';
+import {AppRoute, isCheckedAuth} from '../utils/constants';
 import LoadingScreen from '../common-blocks/loading-screen/loading-screen';
+import PrivateRoute from '../utils/private-route/private-route';
+import browserHistory from '../../browser-history';
+import {getAllFilms, getPromoFilm, getDataLoaded, getAuthorizationStatus} from '../../store/selector';
 
-function App(props) {
+function App() {
 
-  const {promoFilm, allFilms, isDataLoaded} = props;
+  const allFilms = useSelector(getAllFilms);
+  const promoFilm = useSelector(getPromoFilm);
+  const isDataLoaded = useSelector(getDataLoaded);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
-  if (!isDataLoaded) {
+  if (!isDataLoaded || !isCheckedAuth(authorizationStatus)) {
     return (
       <LoadingScreen />
     );
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route path = '/' exact render={() => <MainPage promoInfo = {promoFilm}/>}/>
-        <Route path = {AppRoute.LOGIN} exact component={SignIn}/>
-        <Route path = {AppRoute.MY_LIST} exact render={() => <MyList allFilms = {allFilms}/>}/>
+        <Route path = {AppRoute.ROOT} exact render={() => <MainPage promoInfo = {promoFilm}/>}/>
+        <Route path = {AppRoute.LOGIN} exact render={() => <SignIn/>}/>
+        <PrivateRoute path = {AppRoute.MY_LIST} allFilms = {allFilms} exact component={MyList} />
         <Route path = {AppRoute.FILM} exact>
           <MoviePage allFilms = {allFilms}/>
         </Route>
-        <Route path = {AppRoute.FILM_REVIEW} exact render={() => <ReviewPage allFilms = {allFilms}/>}/>
+        <PrivateRoute path = {AppRoute.FILM_REVIEW} allFilms = {allFilms} exact component={ReviewPage} />
         <Route path = {AppRoute.FILM_PLAYER} exact>
           <Player allFilms = {allFilms}/>
         </Route>
@@ -40,45 +48,19 @@ function App(props) {
           <NotFoundScreen/>
         </Route>
       </Switch>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </BrowserRouter>
   );
 }
 
-App.propTypes = {
-  promoFilm: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    posterImage: PropTypes.string.isRequired,
-    released: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-  }).isRequired,
-  allFilms: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      posterImage: PropTypes.string.isRequired,
-      previewImage: PropTypes.string.isRequired,
-      backgroundImage: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      scoresCount: PropTypes.number.isRequired,
-      director: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      released: PropTypes.number.isRequired,
-      id: PropTypes.number.isRequired,
-      runTime: PropTypes.number.isRequired,
-      starring: PropTypes.arrayOf(
-        PropTypes.string.isRequired,
-      ).isRequired,
-    }).isRequired,
-  ).isRequired,
-  isDataLoaded: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  allFilms: state.currentFilms,
-  promoFilm: state.promoFilm,
-  isDataLoaded: state.isDataLoaded,
-});
-
-export default connect(mapStateToProps, null)(App);
+export default App;

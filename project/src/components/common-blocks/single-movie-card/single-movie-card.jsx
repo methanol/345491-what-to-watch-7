@@ -1,11 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
 import {fetchSimilarMovies, fetchMovieReviews} from '../../../store/api-actions';
+import {useDispatch} from 'react-redux';
 
 export function SingleMovieCard(props) {
-  const {name, previewImage, id, onMouseHover, showSimilarAction, showReviewsAction} = props;
+  const {name, previewImage, id, onMouseHover} = props;
+
+  const dispatch = useDispatch();
+  const showSimilarAction = (ind) => {
+    dispatch(fetchSimilarMovies(ind));
+  };
+  const showReviewsAction = (ind) => {
+    dispatch(fetchMovieReviews(ind));
+  };
 
   const setActiveMovie = () => onMouseHover ? onMouseHover(id) : null;
 
@@ -28,23 +36,13 @@ export function SingleMovieCard(props) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  showSimilarAction(id) {
-    dispatch(fetchSimilarMovies(id));
-  },
-  showReviewsAction(id) {
-    dispatch(fetchMovieReviews(id));
-  },
-});
-
-export default connect(null, mapDispatchToProps)(SingleMovieCard);
-
 SingleMovieCard.propTypes = {
   name: PropTypes.string.isRequired,
   previewImage: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   onMouseHover: PropTypes.func,
-  showSimilarAction: PropTypes.func.isRequired,
-  showReviewsAction: PropTypes.func.isRequired,
 };
+
+export default SingleMovieCard;
+
 

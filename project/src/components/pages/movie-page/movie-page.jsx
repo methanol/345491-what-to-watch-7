@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
@@ -10,11 +10,43 @@ import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
 import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
+import AuthBlock from '../../common-blocks/auth-block/auth-block';
+import {fetchSimilarMovies, fetchMovieReviews, postFavoriteMovie, fetchFavoriteMovies} from '../../../store/api-actions';
+import {AuthorizationStatus} from '../../utils/constants';
+import {getSimilarFilms, getAuthorizationStatus} from '../../../store/selector';
 
 export function MoviePage(props) {
   const params = useParams();
-  const {allFilms, similarFilmsProp} = props;
+  const {allFilms} = props;
   const currentMovie = allFilms.find((it) => Number(it.id) === Number(params.id));
+
+  const similarFilms = useSelector(getSimilarFilms);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+
+  const dispatch = useDispatch();
+  const showSimilarAction = (id) => {
+    dispatch(fetchSimilarMovies(id));
+  };
+  const showReviewsAction = (id) => {
+    dispatch(fetchMovieReviews(id));
+  };
+  const postFavoriteAction = (id, status) => {
+    dispatch(postFavoriteMovie(id, status));
+  };
+  const loadFavoriteMoviesAction = () => {
+    dispatch(fetchFavoriteMovies());
+  };
+
+  useEffect(() => {
+    showSimilarAction(params.id);
+    showReviewsAction(params.id);
+  }, [params.id]);
+
+  const handleFavoriteClick = () => {
+    const isFavorite = currentMovie.isFavorite ? 0 : 1;
+    postFavoriteAction(currentMovie.id, isFavorite);
+    loadFavoriteMoviesAction();
+  };
 
   return (currentMovie) ? (
     <>
@@ -36,19 +68,7 @@ export function MoviePage(props) {
                 <Logo/>
               </Link>
             </div>
-
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <Link to='/mylist'>
-                    <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                  </Link>
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <AuthBlock/>
           </header>
 
           <div className="film-card__wrap">
@@ -68,15 +88,20 @@ export function MoviePage(props) {
                     <span>Play</span>
                   </button>
                 </Link>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+                <button className="btn btn--list film-card__button" type="button" onClick = {handleFavoriteClick}>
+                  {!currentMovie.isFavorite ?
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#add"></use>
+                    </svg> :
+                    <svg viewBox="0 0 19 20" width="19" height="20">
+                      <use xlinkHref="#in-list"></use>
+                    </svg>}
                   <span>My list</span>
                 </button>
-                <Link to={`/films/${params.id}/review`} className="btn film-card__button">
-                  Add review
-                </Link>
+                {authorizationStatus === AuthorizationStatus.AUTH ?
+                  <Link to={`/films/${params.id}/review`} className="btn film-card__button">
+                    Add review
+                  </Link> : null}
               </div>
             </div>
           </div>
@@ -97,7 +122,7 @@ export function MoviePage(props) {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            {similarFilmsProp.map((it) => <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id}/>)}
+            {similarFilms.map((it) => <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id}/>)}
           </div>
         </section>
         <PageFooter/>
@@ -106,17 +131,11 @@ export function MoviePage(props) {
   ) : <NotFoundScreen/>;
 }
 
-const mapStateToProps = (state) => ({
-  similarFilmsProp: state.similarFilms,
-});
-
-export default connect(mapStateToProps, null)(MoviePage);
-
 MoviePage.propTypes = {
   allFilms: PropTypes.arrayOf(
     singleMovieProp.movieProps,
   ).isRequired,
-  similarFilmsProp: PropTypes.arrayOf(
-    singleMovieProp.movieProps,
-  ).isRequired,
 };
+
+export default MoviePage;
+
