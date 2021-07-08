@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Moment from 'react-moment';
+import PropTypes from 'prop-types';
 
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {getReviews} from '../../../store/selector';
+import {fetchMovieReviews} from '../../../store/api-actions';
 
 function renderReviews(reviews) {
 
@@ -26,9 +28,22 @@ function renderReviews(reviews) {
   ));
 }
 
-export function ReviewTab() {
+export function ReviewTab(props) {
+
+  const {currentMovie} = props;
+
+  const dispatch = useDispatch();
+  const showReviewsAction = (id) => {
+    dispatch(fetchMovieReviews(id));
+  };
 
   const reviews = useSelector(getReviews);
+
+  useEffect(() => {
+    showReviewsAction(currentMovie.id);
+  },
+  [currentMovie]);
+
 
   return (
     <div className="film-card__reviews film-card__row">
@@ -38,6 +53,12 @@ export function ReviewTab() {
     </div>
   );
 }
+
+ReviewTab.propTypes = {
+  currentMovie: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  }),
+};
 
 export default ReviewTab;
 
