@@ -1,4 +1,3 @@
-// import { toast } from 'react-toastify';
 import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
@@ -69,20 +68,3 @@ export const replaceRoute = createAction(ActionType.REPLACE_ROUTE, (url) => ({
   payload: url,
 }));
 
-// export function handleNetworkError() {
-//   return function(dispatch) {
-//     dispatch({
-//       type: ActionType.NETWORK_ERROR,
-//     });
-
-//     toast.error('error', {
-//       position: 'top-right',
-//       autoClose: 5000,
-//       hideProgressBar: false,
-//       closeOnClick: true,
-//       pauseOnHover: true,
-//       draggable: true,
-//       progress: undefined,
-//     });
-//   };
-// }

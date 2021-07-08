@@ -8,6 +8,8 @@ const dumbRatingIDs = Array.from(Array(10).keys()).reverse();
 
 export function ReviewForm(props) {
   const {postReviewAction, id} = props;
+  const MAX_SYMBOLS_COUNT = 400;
+  const MIN_SYMBOLS_COUNT = 50;
 
   const [userReview, setUserReview] = useState({
     rating: 5,
@@ -48,7 +50,7 @@ export function ReviewForm(props) {
   );
 
   const checkValidForm = () => {
-    const isMessageValid = (userReview.comment.length >= 50 && userReview.comment.length <= 400);
+    const isMessageValid = (userReview.comment.length >= MIN_SYMBOLS_COUNT && userReview.comment.length <= MAX_SYMBOLS_COUNT);
     const isRatingValid = userReview.rating > 0 && userReview.rating <= 10;
 
     return isMessageValid && isRatingValid;

@@ -29,11 +29,6 @@ export const fetchFavoriteMovies = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(loadFavoriteMovies(data)))
 );
 
-// export const postFavoriteMovie = (id, status) => (dispatch, _getState, api) => (
-//   api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`)
-//     .then(({data}) => dispatch(updateFavoriteMovies(data)))
-// );
-
 export const postFavoriteMovie = (id, status) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`)
     .then(({data}) => dispatch(updateFavoriteMovies(data))),
