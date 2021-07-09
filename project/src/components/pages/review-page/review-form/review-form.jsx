@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import {postReview} from '../../../../store/api-actions';
 
 const dumbRatingIDs = Array.from(Array(10).keys()).reverse();
 
-export function ReviewForm(props) {
-  const {postReviewAction, id} = props;
+export default function ReviewForm(props) {
+  const {id} = props;
   const MAX_SYMBOLS_COUNT = 400;
   const MIN_SYMBOLS_COUNT = 50;
 
@@ -16,7 +16,12 @@ export function ReviewForm(props) {
     comment: '',
   });
 
-  const state = {
+  const dispatch = useDispatch();
+  const postReviewAction = (rev) => {
+    dispatch(postReview(rev));
+  };
+
+  const reviewState = {
     filmId: id,
     comment: userReview.comment,
     rating: userReview.rating,
@@ -25,7 +30,7 @@ export function ReviewForm(props) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    postReviewAction(state);
+    postReviewAction(reviewState);
   };
 
   const setUserMessage = (evt) => {
@@ -75,14 +80,6 @@ export function ReviewForm(props) {
 }
 
 ReviewForm.propTypes = {
-  postReviewAction: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  postReviewAction(rev) {
-    dispatch(postReview(rev));
-  },
-});
-
-export default connect(null, mapDispatchToProps)(ReviewForm);
