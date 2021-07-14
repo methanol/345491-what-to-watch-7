@@ -1,4 +1,4 @@
-import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout, replaceRoute, redirectToRoute, loadFavoriteMovies} from './actions';
+import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout, redirectToRoute, loadFavoriteMovies, replaceRoute, updateMoviesList} from './actions';
 import {APIRoute, AuthorizationStatus, AppRoute} from '../components/utils/constants';
 import { toast } from 'react-toastify';
 
@@ -25,17 +25,21 @@ export const fetchMovieReviews = (id) => (dispatch, _getState, api) => (
 );
 
 export const fetchFavoriteMovies = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.GET_FAVORITE)
+  api.get(APIRoute.GET_FAVORITE, {headers: {'x-token': localStorage.getItem('token')}})
     .then(({data}) => dispatch(loadFavoriteMovies(data)))
 );
 
-export const postFavoriteMovie = (id, status) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`)
-    .then(() => {
-      api.get(APIRoute.GET_PROMO)
-        .then(({data}) => dispatch(loadPromoMovie(data)));
-      api.get(APIRoute.GET_ALL_FILMS)
-        .then(({data}) => dispatch(loadMoviesList(data)));
+export const postFavoriteMoviePromo = (id, status) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`, null, {headers: {'x-token': localStorage.getItem('token')}})
+    .then((favData) => {
+      dispatch(loadPromoMovie(favData.data));
+    })
+    .catch((err) => toast.error(err.message))
+);
+
+export const postFavoriteMovieMain = (id, status) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`, null, {headers: {'x-token': localStorage.getItem('token')}})
+    .then((favData) => { dispatch(updateMoviesList(favData.data));
     })
     .catch((err) => toast.error(err.message))
 );

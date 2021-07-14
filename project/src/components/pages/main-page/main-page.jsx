@@ -11,12 +11,12 @@ import GenresList from '../../common-blocks/genres-list/genres-list';
 import ShowMore from '../../common-blocks/show-more/show-more';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
-import {postFavoriteMovie, fetchPromoMovie} from '../../../store/api-actions';
+import {postFavoriteMoviePromo} from '../../../store/api-actions';
 import {createGenreSelector, createShownMoviesSelector, getMoviesOnPage, getAuthorizationStatus} from '../../../store/selector';
 
 export function MainPage(props) {
 
-  const {promoInfo, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp, postFavoriteAction, fetchPromoMovieAction } = props;
+  const {promoInfo, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp, postFavoriteAction } = props;
   const handleShowMoreClick = () => {
     showMoreAction();
   };
@@ -29,7 +29,6 @@ export function MainPage(props) {
   const handleFavoriteClick = () => {
     const isFavorite = promoInfo.isFavorite ? 0 : 1;
     postFavoriteAction(promoInfo.id, isFavorite);
-    fetchPromoMovieAction();
   };
 
   return (
@@ -123,10 +122,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(resetMoviesList());
   },
   postFavoriteAction(id, status) {
-    dispatch(postFavoriteMovie(id, status));
-  },
-  fetchPromoMovieAction() {
-    dispatch(fetchPromoMovie());
+    dispatch(postFavoriteMoviePromo(id, status));
   },
 });
 
@@ -155,6 +151,5 @@ MainPage.propTypes = {
   showMoreAction: PropTypes.func.isRequired,
   resetMoviesListAction: PropTypes.func.isRequired,
   postFavoriteAction: PropTypes.func.isRequired,
-  fetchPromoMovieAction: PropTypes.func.isRequired,
   moviesOnPageProp: PropTypes.number.isRequired,
 };
