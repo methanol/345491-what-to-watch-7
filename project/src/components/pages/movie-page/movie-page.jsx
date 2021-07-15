@@ -31,7 +31,7 @@ export function MoviePage(props) {
     dispatch(fetchMovieReviews(id));
   };
   const postFavoriteAction = (id, status) => {
-    dispatch(postFavoriteMovie(id, status));
+    dispatch(postFavoriteMovie(id, status, false));
   };
   const loadFavoriteMoviesAction = () => {
     dispatch(fetchFavoriteMovies());

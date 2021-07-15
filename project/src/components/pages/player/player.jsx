@@ -1,9 +1,17 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
+import MoonLoader from 'react-spinners/MoonLoader';
+import { css } from '@emotion/react';
+import './player.css';
+
+const override = css`
+  display: block;
+  margin: 20% auto 0 auto;
+`;
 
 export default function Player(props) {
   const params = useParams();
@@ -12,11 +20,20 @@ export default function Player(props) {
 
   const videoRef = useRef(null);
   const progressBarRef = useRef(null);
+  const togglerRef = useRef(null);
 
   const [playerState, setPlayerState] = useState({
     playing: false,
     elapsedTime: 0,
+    isLoading: true,
   });
+
+  useEffect(() => {
+    videoRef.current.onloadeddata = () => setPlayerState((prevState) => ({
+      ...prevState,
+      isLoading: false,
+    }));
+  }, [videoRef]);
 
   const handlePlayingClick = () => {
     if (videoRef.current.paused) {
@@ -36,9 +53,16 @@ export default function Player(props) {
 
   const updateProgressBar = () => {
     progressBarRef.current.value = videoRef.current ? ((videoRef.current.currentTime / videoRef.current.duration) * 100) : 0;
+
+    const inSeconds = Math.floor(videoRef.current.duration - videoRef.current.currentTime);
+
+    const actualDuration = (videoRef.current.duration > 3600) ? `${Math.floor(inSeconds / 3600)}:${Math.floor((inSeconds % 3600) / 60)}:${((inSeconds % 216000))}` : `${Math.floor(inSeconds / 60)}:${(inSeconds % 60)}`;
+
+    togglerRef.current.style.left = `${videoRef.current ? ((videoRef.current.currentTime / videoRef.current.duration) * 100) : 0}%`;
+
     setPlayerState((prevState) => ({
       ...prevState,
-      elapsedTime:  `-${Math.floor(videoRef.current.duration - videoRef.current.currentTime)}`,
+      elapsedTime:  `-${actualDuration}`,
     }));
   };
 
@@ -50,6 +74,7 @@ export default function Player(props) {
 
   return currentMovie ? (
     <>
+      <MoonLoader loading={playerState.isLoading} css={override} size={150} color={'green'} />
       <div className="visually-hidden">
         <ButtonImage/>
       </div>
@@ -63,8 +88,8 @@ export default function Player(props) {
         <div className="player__controls">
           <div className="player__controls-row">
             <div className="player__time">
-              <progress ref = {progressBarRef} className="player__progress" value={videoRef.current ? Math.floor((videoRef.current.currentTime / videoRef.current.duration) * 100) : 0} max="100"></progress>
-              <div className="player__toggler">Toggler</div>
+              <progress ref = {progressBarRef} className="player__progress" max="100"></progress>
+              <div ref = {togglerRef} className="player__toggler">Toggler</div>
             </div>
             <div className="player__time-value">{videoRef.current ? playerState.elapsedTime : ''}</div>
           </div>

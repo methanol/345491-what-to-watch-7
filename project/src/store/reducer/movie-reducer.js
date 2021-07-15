@@ -6,9 +6,18 @@ const INITIAL_MOVIES_COUNT = 8;
 const initState = {
   currentGenre: 'All genres',
   moviesOnPage: INITIAL_MOVIES_COUNT,
+  changedMovie: {},
   allFilms: [],
   isDataLoaded: false,
 };
+
+function updateMovies(movies, newMovie) {
+  const changedIndex = movies.findIndex((it) => it.id === newMovie.id);
+  const newList = movies.slice();
+  newList.splice(changedIndex, 1, newMovie);
+
+  return newList;
+}
 
 const movieReducer = (state = initState, action) => {
   switch (action.type) {
@@ -33,6 +42,12 @@ const movieReducer = (state = initState, action) => {
         ...state,
         allFilms: camelize(action.payload),
         isDataLoaded: true,
+      };
+    case ActionType.UPDATE_MOVIES_LIST:
+      return {
+        ...state,
+        changedMovie: camelize(action.payload),
+        allFilms: updateMovies(state.allFilms, camelize(action.payload)),
       };
     default:
       return state;

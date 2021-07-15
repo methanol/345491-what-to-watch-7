@@ -5,6 +5,7 @@ export const ActionType = {
   MORE_MOVIES: 'moreMovies',
   RESET_MOVIES_LIST: 'resetMoviesList',
   LOAD_MOVIES_LIST: 'data/loadMoviesList',
+  UPDATE_MOVIES_LIST: 'data/updateMoviesList',
   LOAD_PROMO_MOVIE: 'data/loadMoviesPromo',
   LOAD_SIMILAR_MOVIES: 'data/loadSimilarMovies',
   LOAD_MOVIE_REVIEWS: 'data/loadReviews',
@@ -28,6 +29,10 @@ export const resetMoviesList = createAction(ActionType.RESET_MOVIES_LIST);
 
 export const loadMoviesList = createAction(ActionType.LOAD_MOVIES_LIST, (movies) => ({
   payload: movies,
+}));
+
+export const updateMoviesList = createAction(ActionType.UPDATE_MOVIES_LIST, (movie) => ({
+  payload: movie,
 }));
 
 export const loadPromoMovie = createAction(ActionType.LOAD_PROMO_MOVIE, (movie) => ({
