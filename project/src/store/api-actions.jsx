@@ -29,17 +29,10 @@ export const fetchFavoriteMovies = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(loadFavoriteMovies(data)))
 );
 
-export const postFavoriteMoviePromo = (id, status) => (dispatch, _getState, api) => (
+export const postFavoriteMovie = (id, status, isPromo) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`, null, {headers: {'x-token': localStorage.getItem('token')}})
     .then((favData) => {
-      dispatch(loadPromoMovie(favData.data));
-    })
-    .catch((err) => toast.error(err.message))
-);
-
-export const postFavoriteMovieMain = (id, status) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`, null, {headers: {'x-token': localStorage.getItem('token')}})
-    .then((favData) => { dispatch(updateMoviesList(favData.data));
+      isPromo ? dispatch(loadPromoMovie(favData.data)) : dispatch(updateMoviesList(favData.data));
     })
     .catch((err) => toast.error(err.message))
 );

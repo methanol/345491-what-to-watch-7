@@ -11,7 +11,7 @@ import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-
 import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
-import {fetchSimilarMovies, fetchMovieReviews, postFavoriteMovieMain, fetchFavoriteMovies} from '../../../store/api-actions';
+import {fetchSimilarMovies, fetchMovieReviews, postFavoriteMovie, fetchFavoriteMovies} from '../../../store/api-actions';
 import {AuthorizationStatus} from '../../utils/constants';
 import {getSimilarFilms, getAuthorizationStatus} from '../../../store/selector';
 
@@ -31,7 +31,7 @@ export function MoviePage(props) {
     dispatch(fetchMovieReviews(id));
   };
   const postFavoriteAction = (id, status) => {
-    dispatch(postFavoriteMovieMain(id, status));
+    dispatch(postFavoriteMovie(id, status, false));
   };
   const loadFavoriteMoviesAction = () => {
     dispatch(fetchFavoriteMovies());

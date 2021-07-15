@@ -11,7 +11,7 @@ import GenresList from '../../common-blocks/genres-list/genres-list';
 import ShowMore from '../../common-blocks/show-more/show-more';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
-import {postFavoriteMoviePromo} from '../../../store/api-actions';
+import {postFavoriteMovie} from '../../../store/api-actions';
 import {createGenreSelector, createShownMoviesSelector, getMoviesOnPage, getAuthorizationStatus} from '../../../store/selector';
 
 export function MainPage(props) {
@@ -122,7 +122,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(resetMoviesList());
   },
   postFavoriteAction(id, status) {
-    dispatch(postFavoriteMoviePromo(id, status));
+    dispatch(postFavoriteMovie(id, status, true));
   },
 });
 
