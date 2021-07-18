@@ -4,6 +4,8 @@ import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {createAPI} from './api';
 import {configureStore} from '@reduxjs/toolkit';
+import {Router as BrowserRouter} from 'react-router-dom';
+import browserHistory from './browser-history';
 
 import rootReducer from './store/reducer/root-reducer';
 import {fetchMoviesList, fetchPromoMovie, checkAuth} from './store/api-actions';
@@ -32,7 +34,9 @@ store.dispatch(fetchMoviesList());
 ReactDOM.render(
   <React.StrictMode>
     <Provider store ={store}>
-      <App/>
+      <BrowserRouter history={browserHistory}>
+        <App/>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

@@ -9,9 +9,7 @@ export const ActionType = {
   LOAD_PROMO_MOVIE: 'data/loadMoviesPromo',
   LOAD_SIMILAR_MOVIES: 'data/loadSimilarMovies',
   LOAD_MOVIE_REVIEWS: 'data/loadReviews',
-  POST_REVIEW: 'data/postReview',
   GET_FAVORITES: 'data/loadFavoriteMovies',
-  UPDATE_FAVORITE: 'data/updateFavoriteMovie',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   NETWORK_ERROR: 'data/networkError',
@@ -51,16 +49,8 @@ export const loadFavoriteMovies = createAction(ActionType.GET_FAVORITES, (movies
   payload: movies,
 }));
 
-export const updateFavoriteMovies = createAction(ActionType.UPDATE_FAVORITE, (movie) => ({
-  payload: movie,
-}));
-
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
-}));
-
-export const sendReview = createAction(ActionType.POST_REVIEW, (review) => ({
-  payload: review,
 }));
 
 export const userLogout = createAction(ActionType.LOGOUT);
