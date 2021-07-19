@@ -13,7 +13,6 @@ import {mockPromo, allFilms} from '../../mocks/films';
 let history = null;
 let store = null;
 let fakeApp = null;
-const fakeID = 1;
 
 describe('Application Routing', () => {
 
@@ -64,13 +63,6 @@ describe('Application Routing', () => {
     expect(screen.getByLabelText(/Email address/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
   });
-
-  // it('should render "MyList" when user navigate to "/mylist"', () => {
-  //   history.push(AppRoute.MY_LIST);
-  //   render(fakeApp);
-
-  //   expect(screen.getByLabelText(/My list/i)).toBeInTheDocument();
-  // });
 
   it('should render "NotFoundScreen" when user navigate to non-existent route', () => {
     history.push('/wrong-route');

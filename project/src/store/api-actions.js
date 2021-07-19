@@ -52,7 +52,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 );
 
 export const postReview = ({filmId, comment, rating}) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.POST_COMMENTS}/${filmId}`, {comment, rating})
+  api.post(`${APIRoute.POST_COMMENTS}/${filmId}`, {comment, rating}, {headers: {'x-token': localStorage.getItem('token')}})
     .then(() => dispatch(redirectToRoute(`${APIRoute.GET_FILM}/${filmId}`)))
     .catch((err) => toast.error(err.message))
 );

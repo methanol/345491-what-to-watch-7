@@ -48,7 +48,7 @@ export default function ReviewForm(props) {
   };
 
   const renderRatingList = (it) => (
-    <React.Fragment key={it.id}>
+    <React.Fragment key={it}>
       <input className="rating__input" id={`star-${it}`} type="radio" name="rating" value={it} onChange = {setUserRating} />
       <label className="rating__label" htmlFor={`star-${it}`}>Rating {it}</label>
     </React.Fragment>
