@@ -24,7 +24,6 @@ export const AuthorizationStatus = {
 export const APIRoute = {
   GET_ALL_FILMS: '/films',
   GET_FILM: '/films',
-  GET_SIMILAR_FILMS: '/films/:id/similar',
   GET_PROMO: '/promo',
   GET_FAVORITE: '/favorite',
   POST_FAVORITE: '/favorite',

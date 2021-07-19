@@ -14,7 +14,7 @@ export default function DetailTab(props) {
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Starring</strong>
           <span className="film-card__details-value">
-            {currentMovie.starring.map((it) => <div key = {it}>{it}</div>)}
+            {currentMovie.starring.map((it) => <span key = {it}>{it}<br/></span>)}
           </span>
         </p>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router as BrowserRouter, Switch, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
 import { ToastContainer } from 'react-toastify';
@@ -15,7 +15,6 @@ import NotFoundScreen from '../pages/not-found-page/not-found-page.jsx';
 import {AppRoute, isCheckedAuth} from '../utils/constants';
 import LoadingScreen from '../common-blocks/loading-screen/loading-screen';
 import PrivateRoute from '../utils/private-route/private-route';
-import browserHistory from '../../browser-history';
 import {getAllFilms, getPromoFilm, getDataLoaded, getAuthorizationStatus} from '../../store/selector';
 
 function App() {
@@ -32,7 +31,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter history={browserHistory}>
+    <>
       <Switch>
         <Route path = {AppRoute.ROOT} exact render={() => <MainPage promoInfo = {promoFilm}/>}/>
         <Route path = {AppRoute.LOGIN} exact render={() => <SignIn/>}/>
@@ -59,7 +58,7 @@ function App() {
         draggable
         pauseOnHover
       />
-    </BrowserRouter>
+    </>
   );
 }
 
