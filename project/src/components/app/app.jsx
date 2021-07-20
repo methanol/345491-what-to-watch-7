@@ -35,11 +35,11 @@ function App() {
       <Switch>
         <Route path = {AppRoute.ROOT} exact render={() => <MainPage promoInfo = {promoFilm}/>}/>
         <Route path = {AppRoute.LOGIN} exact render={() => <SignIn/>}/>
-        <PrivateRoute path = {AppRoute.MY_LIST} allFilms = {allFilms} exact component={MyList} />
+        <PrivateRoute exact path={AppRoute.MY_LIST} render={() => (<MyList/>)}/>
         <Route path = {AppRoute.FILM} exact>
           <MoviePage allFilms = {allFilms}/>
         </Route>
-        <PrivateRoute path = {AppRoute.FILM_REVIEW} allFilms = {allFilms} exact component={ReviewPage} />
+        <PrivateRoute exact path={AppRoute.FILM_REVIEW} render={() => (<ReviewPage allFilms = {allFilms}/>)}/>
         <Route path = {AppRoute.FILM_PLAYER} exact>
           <Player allFilms = {allFilms}/>
         </Route>

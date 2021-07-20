@@ -25,12 +25,12 @@ export const fetchMovieReviews = (id) => (dispatch, _getState, api) => (
 );
 
 export const fetchFavoriteMovies = () => (dispatch, _getState, api) => (
-  api.get(APIRoute.GET_FAVORITE, {headers: {'x-token': localStorage.getItem('token')}})
+  api.get(APIRoute.GET_FAVORITE)
     .then(({data}) => dispatch(loadFavoriteMovies(data)))
 );
 
 export const postFavoriteMovie = (id, status, isPromo) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`, null, {headers: {'x-token': localStorage.getItem('token')}})
+  api.post(`${APIRoute.POST_FAVORITE}/${id}/${status}`)
     .then((favData) => {
       isPromo ? dispatch(loadPromoMovie(favData.data)) : dispatch(updateMoviesList(favData.data));
     })
@@ -52,7 +52,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 );
 
 export const postReview = ({filmId, comment, rating}) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.POST_COMMENTS}/${filmId}`, {comment, rating}, {headers: {'x-token': localStorage.getItem('token')}})
+  api.post(`${APIRoute.POST_COMMENTS}/${filmId}`, {comment, rating})
     .then(() => dispatch(redirectToRoute(`${APIRoute.GET_FILM}/${filmId}`)))
     .catch((err) => toast.error(err.message))
 );

@@ -12,7 +12,7 @@ export const redirect = (_store) => (next) => (action) => {
 export const replace = (_store) => (next) => (action) => {
 
   if (action.type === ActionType.REPLACE_ROUTE) {
-    browserHistory.replace('/');
+    browserHistory.replace(action.payload);
   }
 
   return next(action);
