@@ -12,7 +12,7 @@ import ShowMore from '../../common-blocks/show-more/show-more';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
 import {postFavoriteMovie} from '../../../store/api-actions';
-import {createGenreSelector, createShownMoviesSelector, getMoviesOnPage, getAuthorizationStatus} from '../../../store/selector';
+import {createGenreSelector, createShownMoviesSelector, getMoviesOnPage} from '../../../store/selector';
 
 export function MainPage(props) {
 
@@ -111,7 +111,6 @@ const mapStateToProps = (state) => ({
   currentFilmsProp: createGenreSelector(state),
   shownFilmsProp: createShownMoviesSelector(state),
   moviesOnPageProp: getMoviesOnPage(state),
-  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

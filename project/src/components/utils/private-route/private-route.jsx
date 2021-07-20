@@ -1,47 +1,33 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {useSelector} from 'react-redux';
 
 import {AuthorizationStatus} from '../constants';
+import {getAuthorizationStatus} from '../../../store/selector';
+import {AppRoute} from '../constants';
 
-function PrivateRoute (props) {
-  const { component: Component, authorizationStatus, ...rest } = props;
+function PrivateRoute ({render, path, exact}) {
+
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   return (
     <Route
-      {...rest}
-      render={() => authorizationStatus === AuthorizationStatus.AUTH ? <Component allFilms = {props.allFilms} /> : <Redirect to='/login' />}
+      path={path}
+      exact={exact}
+      render={(routeProps) => (
+        authorizationStatus === AuthorizationStatus.AUTH
+          ? render(routeProps)
+          : <Redirect to={AppRoute.LOGIN} />
+      )}
     />
   );
 }
 
 PrivateRoute.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  component: PropTypes.element,
-  allFilms: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      posterImage: PropTypes.string.isRequired,
-      previewImage: PropTypes.string.isRequired,
-      backgroundImage: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      scoresCount: PropTypes.number.isRequired,
-      director: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-      released: PropTypes.number.isRequired,
-      id: PropTypes.number.isRequired,
-      runTime: PropTypes.number.isRequired,
-      starring: PropTypes.arrayOf(
-        PropTypes.string.isRequired,
-      ).isRequired,
-    }).isRequired,
-  ).isRequired,
+  exact: PropTypes.bool.isRequired,
+  path: PropTypes.string.isRequired,
+  render: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.auth.authorizationStatus,
-});
-
-export default connect(mapStateToProps, null)(PrivateRoute);
+export default PrivateRoute;
