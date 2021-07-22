@@ -14,6 +14,7 @@ import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {fetchSimilarMovies, fetchMovieReviews, postFavoriteMovie, fetchFavoriteMovies} from '../../../store/api-actions';
 import {AuthorizationStatus} from '../../utils/constants';
 import {getSimilarFilms, getAuthorizationStatus} from '../../../store/selector';
+import './movie-page.css';
 
 export function MoviePage(props) {
   const params = useParams();
@@ -80,12 +81,12 @@ export function MoviePage(props) {
               </p>
 
               <div className="film-card__buttons">
-                <Link className="film-card__button" to={`/player/${params.id}`}>
+                <Link className="film-card__button button-caption" to={`/player/${params.id}`}>
                   <button className="btn btn--play film-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
-                    <span>Play</span>
+                    <span className = 'button-caption'>Play</span>
                   </button>
                 </Link>
                 <button className="btn btn--list film-card__button" type="button" onClick = {handleFavoriteClick}>

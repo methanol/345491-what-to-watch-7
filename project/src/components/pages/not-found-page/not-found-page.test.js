@@ -13,7 +13,7 @@ describe('Component: NotFoundScreen', () => {
       </Router>,
     );
     const textElement = getByText('Вернуться на главную');
-    const headElement = getByText('404. Page not found');
+    const headElement = getByText('Page not found');
 
     expect(textElement).toBeInTheDocument();
     expect(headElement).toBeInTheDocument();

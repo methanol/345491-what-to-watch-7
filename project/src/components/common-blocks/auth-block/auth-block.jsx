@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {AuthorizationStatus} from '../../utils/constants';
 import {logout} from '../../../store/api-actions';
 import {AppRoute} from '../../utils/constants';
+import {getAuthorizationStatus} from '../../../store/selector';
 
 export function AuthBlock(props) {
   const {authorizationStatusStateProp, onLogoutAction} = props;
@@ -48,7 +49,7 @@ AuthBlock.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatusStateProp: state.auth.authorizationStatus,
+  authorizationStatusStateProp: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

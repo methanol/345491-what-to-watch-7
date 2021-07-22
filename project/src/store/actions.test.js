@@ -1,4 +1,4 @@
-import {ActionType, switchGenre, showMoreMovies, resetMoviesList, loadMoviesList, updateMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, loadFavoriteMovies, requireAuthorization, userLogout, redirectToRoute, replaceRoute} from './actions';
+import {ActionType, switchGenre, showMoreMovies, resetMoviesList, loadMoviesList, updateMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, loadFavoriteMovies, requireAuthorization, userLogout, redirectToRoute, replaceRoute, uploadReview} from './actions';
 
 describe('Actions', () => {
   it('action creator for genre switching', () => {
@@ -113,6 +113,14 @@ describe('Actions', () => {
     };
 
     expect(replaceRoute('./route')).toEqual(expectedAction);
+  });
+  it('action creator for review uploading', () => {
+    const expectedAction = {
+      type: ActionType.UPLOAD_REVIEW,
+      payload: true,
+    };
+
+    expect(uploadReview(true)).toEqual(expectedAction);
   });
 });
 

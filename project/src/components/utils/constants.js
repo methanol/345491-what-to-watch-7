@@ -6,6 +6,8 @@ export const UserVerdicts = {
   AWESOME: 'Awesome',
 };
 
+export const INITIAL_GENRE = 'All genres';
+
 export const AppRoute = {
   ROOT: '/',
   LOGIN: '/login',

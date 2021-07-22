@@ -121,10 +121,14 @@ describe('Async operations', () => {
 
     return checkCommentsPost(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.REDIRECT_TO_ROUTE,
           payload: `${APIRoute.GET_FILM}/${filmId}`,
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
+          type: ActionType.UPLOAD_REVIEW,
+          payload: false,
         });
       });
   });

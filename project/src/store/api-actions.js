@@ -1,17 +1,17 @@
-import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout, redirectToRoute, loadFavoriteMovies, replaceRoute, updateMoviesList} from './actions';
+import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout, redirectToRoute, loadFavoriteMovies, replaceRoute, updateMoviesList, uploadReview} from './actions';
 import {APIRoute, AuthorizationStatus, AppRoute} from '../components/utils/constants';
 import { toast } from 'react-toastify';
 
 export const fetchMoviesList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.GET_ALL_FILMS)
     .then(({data}) => dispatch(loadMoviesList(data)))
-    .catch((err) => toast.error(err.message))
+    .catch((err) => toast.error('Ошибка при загрузке данных о фильмах'))
 );
 
 export const fetchPromoMovie = () => (dispatch, _getState, api) => (
   api.get(APIRoute.GET_PROMO)
     .then(({data}) => dispatch(loadPromoMovie(data)))
-    .catch((err) => toast.error(err.message))
+    .catch((err) => toast.error('Ошибка при загрузке данных о фильмах'))
 );
 
 export const fetchSimilarMovies = (id) => (dispatch, _getState, api) => (
@@ -34,13 +34,13 @@ export const postFavoriteMovie = (id, status, isPromo) => (dispatch, _getState, 
     .then((favData) => {
       isPromo ? dispatch(loadPromoMovie(favData.data)) : dispatch(updateMoviesList(favData.data));
     })
-    .catch((err) => toast.error(err.message))
+    .catch((err) => toast.error('Ошибка при добавлении фильма в избранное'))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.GET_LOGIN)
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch((err) => toast.error(err.message))
+    .catch((err) => toast.info('Вы не авторизованы на сайте'))
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
@@ -48,13 +48,19 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(({data}) => localStorage.setItem('token', data.token))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(replaceRoute(AppRoute.ROOT)))
-    .catch((err) => toast.error(err.message))
+    .catch((err) => toast.error('Ошибка при авторизации пользователя'))
 );
 
 export const postReview = ({filmId, comment, rating}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.POST_COMMENTS}/${filmId}`, {comment, rating})
-    .then(() => dispatch(redirectToRoute(`${APIRoute.GET_FILM}/${filmId}`)))
-    .catch((err) => toast.error(err.message))
+    .then(() => {
+      dispatch(redirectToRoute(`${APIRoute.GET_FILM}/${filmId}`));
+      dispatch(uploadReview(false));
+    })
+    .catch((err) => {
+      toast.error('Ошибка при отправке обзора фильма');
+      dispatch(uploadReview(false));
+    })
 );
 
 export const logout = () => (dispatch, _getState, api) => (
