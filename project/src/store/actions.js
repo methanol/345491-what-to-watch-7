@@ -12,9 +12,9 @@ export const ActionType = {
   GET_FAVORITES: 'data/loadFavoriteMovies',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
-  NETWORK_ERROR: 'data/networkError',
   REDIRECT_TO_ROUTE: 'history/redirectToRoute',
   REPLACE_ROUTE: 'history/replaceRoute',
+  UPLOAD_REVIEW: 'data/uploadReview',
 };
 
 export const switchGenre = createAction(ActionType.SWITCH_GENRE, (genre) => ({
@@ -61,5 +61,9 @@ export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) 
 
 export const replaceRoute = createAction(ActionType.REPLACE_ROUTE, (url) => ({
   payload: url,
+}));
+
+export const uploadReview = createAction(ActionType.UPLOAD_REVIEW, (inProgress) => ({
+  payload: inProgress,
 }));
 

@@ -13,6 +13,7 @@ import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
 import {postFavoriteMovie} from '../../../store/api-actions';
 import {createGenreSelector, createShownMoviesSelector, getMoviesOnPage} from '../../../store/selector';
+import './main-page.css';
 
 export function MainPage(props) {
 
@@ -67,7 +68,7 @@ export function MainPage(props) {
               </p>
 
               <div className="film-card__buttons">
-                <Link className="film-card__button" to={`/player/${promoInfo.id}`}>
+                <Link className="film-card__button button-caption" to={`/player/${promoInfo.id}`}>
                   <button className="btn btn--play film-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
@@ -107,26 +108,6 @@ export function MainPage(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  currentFilmsProp: createGenreSelector(state),
-  shownFilmsProp: createShownMoviesSelector(state),
-  moviesOnPageProp: getMoviesOnPage(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  showMoreAction() {
-    dispatch(showMoreMovies());
-  },
-  resetMoviesListAction() {
-    dispatch(resetMoviesList());
-  },
-  postFavoriteAction(id, status) {
-    dispatch(postFavoriteMovie(id, status, true));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
-
 MainPage.propTypes = {
   promoInfo: PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -152,3 +133,24 @@ MainPage.propTypes = {
   postFavoriteAction: PropTypes.func.isRequired,
   moviesOnPageProp: PropTypes.number.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  currentFilmsProp: createGenreSelector(state),
+  shownFilmsProp: createShownMoviesSelector(state),
+  moviesOnPageProp: getMoviesOnPage(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  showMoreAction() {
+    dispatch(showMoreMovies());
+  },
+  resetMoviesListAction() {
+    dispatch(resetMoviesList());
+  },
+  postFavoriteAction(id, status) {
+    dispatch(postFavoriteMovie(id, status, true));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+

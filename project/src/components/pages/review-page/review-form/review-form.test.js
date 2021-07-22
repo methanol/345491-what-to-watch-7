@@ -12,7 +12,7 @@ describe('Component: ReviewForm', () => {
   it('should render correctly', () => {
     const history = createMemoryHistory();
     render(
-      <Provider store={mockStore({})}>
+      <Provider store={mockStore({data: {reviewUploading: false}})}>
         <Router history={history}>
           <ReviewForm id={0}/>
         </Router>
@@ -20,6 +20,6 @@ describe('Component: ReviewForm', () => {
     );
 
     expect(screen.getByText('Post')).toBeInTheDocument();
-    expect(screen.getAllByLabelText(/Rating/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByLabelText(/Rating/i).length).toBe(10);
   });
 });

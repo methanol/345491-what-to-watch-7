@@ -16,7 +16,7 @@ function renderReviews(reviews) {
         <footer className="review__details">
           <cite className="review__author">{it.user.name}</cite>
           <time className="review__date" dateTime="2016-12-24">
-            <Moment format="YYYY/MM/DD">
+            <Moment format="MMMM DD, YYYY">
               {it.date}
             </Moment>
           </time>

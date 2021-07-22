@@ -1,4 +1,4 @@
-import {loadPromoMovie, loadSimilarMovie, loadMovieReview, loadFavoriteMovies} from '../actions';
+import {loadPromoMovie, loadSimilarMovie, loadMovieReview, loadFavoriteMovies, uploadReview} from '../actions';
 import camelize from 'camelize';
 import {createReducer} from '@reduxjs/toolkit';
 
@@ -7,6 +7,7 @@ const initState = {
   similarFilms: [],
   reviews: [],
   favoriteMovies: [],
+  reviewUploading: false,
 };
 
 const dataReducer = createReducer(initState, (builder) => {
@@ -22,6 +23,9 @@ const dataReducer = createReducer(initState, (builder) => {
     })
     .addCase(loadFavoriteMovies, (state, action) => {
       state.favoriteMovies = camelize(action.payload);
+    })
+    .addCase(uploadReview, (state, action) => {
+      state.reviewUploading = action.payload;
     });
 });
 

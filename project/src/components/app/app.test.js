@@ -33,9 +33,10 @@ describe('Application Routing', () => {
         similarFilms: [],
         reviews: [],
         favoriteMovies: [],
+        reviewUploading: false,
       },
       auth: {
-        authorizationStatus: AuthorizationStatus.AUTH,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
       },
     });
 
@@ -69,7 +70,7 @@ describe('Application Routing', () => {
     render(fakeApp);
 
     const textElement = screen.getByText('Вернуться на главную');
-    const headElement = screen.getByText('404. Page not found');
+    const headElement = screen.getByText('Page not found');
 
     expect(textElement).toBeInTheDocument();
     expect(headElement).toBeInTheDocument();

@@ -5,13 +5,7 @@ import PropTypes from 'prop-types';
 import ButtonImage from '../../utils/button-image/button-image.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import MoonLoader from 'react-spinners/MoonLoader';
-import { css } from '@emotion/react';
 import './player.css';
-
-const override = css`
-  display: block;
-  margin: 20% auto 0 auto;
-`;
 
 export default function Player(props) {
   const params = useParams();
@@ -74,7 +68,7 @@ export default function Player(props) {
 
   return currentMovie ? (
     <>
-      <MoonLoader loading={playerState.isLoading} css={override} size={150} color={'green'} />
+      <MoonLoader loading={playerState.isLoading} className ='player__loader' size={150} color={'green'} />
       <div className="visually-hidden">
         <ButtonImage/>
       </div>

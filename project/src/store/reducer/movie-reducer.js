@@ -1,10 +1,11 @@
 import {ActionType} from '../actions';
 import camelize from 'camelize';
+import {INITIAL_GENRE} from '../../components/utils/constants';
 
 const INITIAL_MOVIES_COUNT = 8;
 
 const initState = {
-  currentGenre: 'All genres',
+  currentGenre: INITIAL_GENRE,
   moviesOnPage: INITIAL_MOVIES_COUNT,
   changedMovie: {},
   allFilms: [],
@@ -34,7 +35,7 @@ const movieReducer = (state = initState, action) => {
     case ActionType.RESET_MOVIES_LIST:
       return {
         ...state,
-        currentGenre: 'All genres',
+        currentGenre: INITIAL_GENRE,
         moviesOnPage: INITIAL_MOVIES_COUNT,
       };
     case ActionType.LOAD_MOVIES_LIST:

@@ -6,15 +6,17 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 
 import {SignIn} from './sign-in';
+import {AuthorizationStatus} from '../../utils/constants';
+
 const mockStore = configureStore({});
 
 describe('Component: SignIn', () => {
   it('should render correctly', () => {
     const history = createMemoryHistory();
     render(
-      <Provider store={mockStore({})}>
+      <Provider store={mockStore({auth: {authorizationStatus: AuthorizationStatus.NO_AUTH}})}>
         <Router history={history}>
-          <SignIn onSubmitAction={()=>{}}/>
+          <SignIn onSubmitAction={()=>{}} authorizationStatusStateProp = {AuthorizationStatus.NO_AUTH}/>
         </Router>
       </Provider>,
     );

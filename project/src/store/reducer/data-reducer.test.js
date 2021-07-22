@@ -6,6 +6,7 @@ const initState = {
   similarFilms: [],
   reviews: [],
   favoriteMovies: [],
+  reviewUploading: false,
 };
 
 const changedState = Object.assign({}, initState);
@@ -50,5 +51,14 @@ describe('Data reducer testing', () => {
 
     expect(dataReducer(changedState, loadFavoriteAction))
       .toEqual(Object.assign(changedState, {favoriteMovies: ['favorite1, favorite2']}));
+  });
+  it('should set review uploading', () => {
+    const reviewUploadingAction = {
+      type: ActionType.UPLOAD_REVIEW,
+      payload: true,
+    };
+
+    expect(dataReducer(changedState, reviewUploadingAction))
+      .toEqual(Object.assign(changedState, {reviewUploading: true}));
   });
 });

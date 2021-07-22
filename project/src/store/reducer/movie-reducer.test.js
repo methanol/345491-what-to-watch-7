@@ -1,10 +1,11 @@
 import movieReducer from './movie-reducer';
 import {ActionType} from '../actions';
+import {INITIAL_GENRE} from '../../components/utils/constants';
 
 const INITIAL_MOVIES_COUNT = 8;
 
 const initState = {
-  currentGenre: 'All genres',
+  currentGenre: INITIAL_GENRE,
   moviesOnPage: INITIAL_MOVIES_COUNT,
   changedMovie: {},
   allFilms: [],
