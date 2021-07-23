@@ -12,6 +12,7 @@ export const ActionType = {
   GET_FAVORITES: 'data/loadFavoriteMovies',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
+  SET_USER_AVATAR: 'user/avatar',
   REDIRECT_TO_ROUTE: 'history/redirectToRoute',
   REPLACE_ROUTE: 'history/replaceRoute',
   UPLOAD_REVIEW: 'data/uploadReview',
@@ -52,6 +53,8 @@ export const loadFavoriteMovies = createAction(ActionType.GET_FAVORITES, (movies
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
   payload: status,
 }));
+
+export const setUserAvatar = createAction(ActionType.SET_USER_AVATAR);
 
 export const userLogout = createAction(ActionType.LOGOUT);
 

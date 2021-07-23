@@ -1,10 +1,9 @@
 import React, {useEffect}  from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import MoviesList from '../../common-blocks/movies-list/movies-list';
-import ButtonImage from '../../utils/button-image/button-image.jsx';
+import ButtonImage from '../../common-blocks/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import GenresList from '../../common-blocks/genres-list/genres-list';
@@ -12,12 +11,28 @@ import ShowMore from '../../common-blocks/show-more/show-more';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
 import {postFavoriteMovie} from '../../../store/api-actions';
-import {createGenreSelector, createShownMoviesSelector, getMoviesOnPage} from '../../../store/selector';
+import {createGenreSelector, createShownMoviesSelector, getMoviesOnPage, getPromoFilm} from '../../../store/selector/selector';
+import {AppRoute, FavoriteIndexes} from '../../utils/constants';
 import './main-page.css';
 
 export function MainPage(props) {
 
-  const {promoInfo, currentFilmsProp, showMoreAction, resetMoviesListAction, moviesOnPageProp, shownFilmsProp, postFavoriteAction } = props;
+  const dispatch = useDispatch();
+  const postFavoriteAction = (id, status) => {
+    dispatch(postFavoriteMovie(id, status, true));
+  };
+  const showMoreAction = () => {
+    dispatch(showMoreMovies());
+  };
+  const resetMoviesListAction = () => {
+    dispatch(resetMoviesList());
+  };
+
+  const currentFilmsProp = useSelector(createGenreSelector);
+  const shownFilmsProp = useSelector(createShownMoviesSelector);
+  const moviesOnPageProp = useSelector(getMoviesOnPage);
+  const promoInfo = useSelector(getPromoFilm);
+
   const handleShowMoreClick = () => {
     showMoreAction();
   };
@@ -28,7 +43,7 @@ export function MainPage(props) {
   []);
 
   const handleFavoriteClick = () => {
-    const isFavorite = promoInfo.isFavorite ? 0 : 1;
+    const isFavorite = promoInfo.isFavorite ? FavoriteIndexes.NON_ACTIVE : FavoriteIndexes.ACTIVE;
     postFavoriteAction(promoInfo.id, isFavorite);
   };
 
@@ -47,7 +62,7 @@ export function MainPage(props) {
 
         <header className="page-header film-card__head">
           <div className="logo">
-            <a className="logo__link">
+            <a href = {AppRoute.ROOT} className="logo__link">
               <Logo/>
             </a>
           </div>
@@ -108,49 +123,5 @@ export function MainPage(props) {
   );
 }
 
-MainPage.propTypes = {
-  promoInfo: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    posterImage: PropTypes.string.isRequired,
-    released: PropTypes.number.isRequired,
-    id: PropTypes.number.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-  }).isRequired,
-  currentFilmsProp: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
-  shownFilmsProp: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
-  showMoreAction: PropTypes.func.isRequired,
-  resetMoviesListAction: PropTypes.func.isRequired,
-  postFavoriteAction: PropTypes.func.isRequired,
-  moviesOnPageProp: PropTypes.number.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  currentFilmsProp: createGenreSelector(state),
-  shownFilmsProp: createShownMoviesSelector(state),
-  moviesOnPageProp: getMoviesOnPage(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  showMoreAction() {
-    dispatch(showMoreMovies());
-  },
-  resetMoviesListAction() {
-    dispatch(resetMoviesList());
-  },
-  postFavoriteAction(id, status) {
-    dispatch(postFavoriteMovie(id, status, true));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default MainPage;
 

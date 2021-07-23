@@ -3,12 +3,12 @@ import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 
-import ButtonImage from '../../utils/button-image/button-image.jsx';
+import ButtonImage from '../../common-blocks/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import {login} from '../../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../utils/constants';
-import {getAuthorizationStatus} from '../../../store/selector';
+import {getAuthorizationStatus} from '../../../store/selector/selector';
 
 export function SignIn(props) {
 

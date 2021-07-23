@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {getScoreEvaluation} from '../../utils/functions';
 
-export default function OverviewTab(props) {
+function OverviewTab(props) {
   const {currentMovie} = props;
 
   return (
@@ -38,3 +38,5 @@ OverviewTab.propTypes = {
     ).isRequired,
   }).isRequired,
 };
+
+export default OverviewTab;

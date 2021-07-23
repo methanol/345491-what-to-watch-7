@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {postReview} from '../../../../store/api-actions';
 import {uploadReview} from '../../../../store/actions';
-import {getUserReviewUploading} from '../../../../store/selector';
+import {getUserReviewUploading} from '../../../../store/selector/selector';
 
 const dumbRatingIDs = Array.from(Array(10).keys()).reverse();
 

@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import {INITIAL_GENRE} from '../../components/utils/constants';
 
 export const getAuthorizationStatus = (state) => state.auth.authorizationStatus;
+export const getUserImage = (state) => state.auth.userImage;
 
 export const getPromoFilm = (state) => state.data.promoFilm;
 export const getSimilarFilms = (state) => state.data.similarFilms;

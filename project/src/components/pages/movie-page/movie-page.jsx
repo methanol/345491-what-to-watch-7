@@ -3,17 +3,18 @@ import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
-import ButtonImage from '../../utils/button-image/button-image.jsx';
+import ButtonImage from '../../common-blocks/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
-import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
+import MoviesList from '../../common-blocks/movies-list/movies-list';
 import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {fetchSimilarMovies, fetchMovieReviews, postFavoriteMovie, fetchFavoriteMovies} from '../../../store/api-actions';
-import {AuthorizationStatus} from '../../utils/constants';
-import {getSimilarFilms, getAuthorizationStatus} from '../../../store/selector';
+import {setUserAvatar} from '../../../store/actions';
+import {AuthorizationStatus, FavoriteIndexes} from '../../utils/constants';
+import {getSimilarFilms, getAuthorizationStatus} from '../../../store/selector/selector';
 import './movie-page.css';
 
 export function MoviePage(props) {
@@ -37,14 +38,18 @@ export function MoviePage(props) {
   const loadFavoriteMoviesAction = () => {
     dispatch(fetchFavoriteMovies());
   };
+  const setUserAvatarAction = () => {
+    dispatch(setUserAvatar());
+  };
 
   useEffect(() => {
     showSimilarAction(params.id);
     showReviewsAction(params.id);
+    setUserAvatarAction();
   }, [params.id]);
 
   const handleFavoriteClick = () => {
-    const isFavorite = currentMovie.isFavorite ? 0 : 1;
+    const isFavorite = currentMovie.isFavorite ? FavoriteIndexes.NON_ACTIVE : FavoriteIndexes.ACTIVE;
     postFavoriteAction(currentMovie.id, isFavorite);
     loadFavoriteMoviesAction();
   };
@@ -123,7 +128,7 @@ export function MoviePage(props) {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            {similarFilms.map((it) => <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id}/>)}
+            <MoviesList allFilms = {similarFilms}/>
           </div>
         </section>
         <PageFooter/>

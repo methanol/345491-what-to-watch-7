@@ -14,13 +14,12 @@ import Player from '../pages/player/player.jsx';
 import NotFoundScreen from '../pages/not-found-page/not-found-page.jsx';
 import {AppRoute, isCheckedAuth} from '../utils/constants';
 import LoadingScreen from '../common-blocks/loading-screen/loading-screen';
-import PrivateRoute from '../utils/private-route/private-route';
-import {getAllFilms, getPromoFilm, getDataLoaded, getAuthorizationStatus} from '../../store/selector';
+import PrivateRoute from '../common-blocks/private-route/private-route';
+import {getAllFilms, getDataLoaded, getAuthorizationStatus} from '../../store/selector/selector';
 
 function App() {
 
   const allFilms = useSelector(getAllFilms);
-  const promoFilm = useSelector(getPromoFilm);
   const isDataLoaded = useSelector(getDataLoaded);
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
@@ -33,7 +32,7 @@ function App() {
   return (
     <>
       <Switch>
-        <Route path = {AppRoute.ROOT} exact render={() => <MainPage promoInfo = {promoFilm}/>}/>
+        <Route path = {AppRoute.ROOT} exact render={() => <MainPage/>}/>
         <Route path = {AppRoute.LOGIN} exact render={() => <SignIn/>}/>
         <PrivateRoute exact path={AppRoute.MY_LIST} render={() => (<MyList/>)}/>
         <Route path = {AppRoute.FILM} exact>

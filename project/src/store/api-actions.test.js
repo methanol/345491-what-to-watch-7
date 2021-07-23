@@ -145,14 +145,14 @@ describe('Async operations', () => {
 
     return loginLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenCalledTimes(3);
 
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.REQUIRED_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
         });
 
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: ActionType.REPLACE_ROUTE,
           payload: AppRoute.ROOT,
         });
@@ -248,8 +248,9 @@ describe('Async operations', () => {
           type: ActionType.LOGOUT,
         });
 
-        expect(Storage.prototype.removeItem).toBeCalledTimes(1);
+        expect(Storage.prototype.removeItem).toBeCalledTimes(2);
         expect(Storage.prototype.removeItem).nthCalledWith(1, 'token');
+        expect(Storage.prototype.removeItem).nthCalledWith(2, 'avatar');
       });
   });
 

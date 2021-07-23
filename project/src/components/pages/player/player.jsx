@@ -2,7 +2,7 @@ import React, {useRef, useState, useEffect} from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import ButtonImage from '../../utils/button-image/button-image.jsx';
+import ButtonImage from '../../common-blocks/button-image/button-image.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import MoonLoader from 'react-spinners/MoonLoader';
 import './player.css';
@@ -15,6 +15,9 @@ export default function Player(props) {
   const videoRef = useRef(null);
   const progressBarRef = useRef(null);
   const togglerRef = useRef(null);
+
+  const MINUTE = 60;
+  const HOUR = 3600;
 
   const [playerState, setPlayerState] = useState({
     playing: false,
@@ -50,7 +53,7 @@ export default function Player(props) {
 
     const inSeconds = Math.floor(videoRef.current.duration - videoRef.current.currentTime);
 
-    const actualDuration = (videoRef.current.duration > 3600) ? `${Math.floor(inSeconds / 3600)}:${Math.floor((inSeconds % 3600) / 60)}:${((inSeconds % 216000))}` : `${Math.floor(inSeconds / 60)}:${(inSeconds % 60)}`;
+    const actualDuration = (videoRef.current.duration > HOUR) ? `${Math.floor(inSeconds / HOUR)}:${Math.floor((inSeconds % HOUR) / MINUTE)}:${((inSeconds % (HOUR * MINUTE)))}` : `${Math.floor(inSeconds / MINUTE)}:${(inSeconds % MINUTE)}`;
 
     togglerRef.current.style.left = `${videoRef.current ? ((videoRef.current.currentTime / videoRef.current.duration) * 100) : 0}%`;
 

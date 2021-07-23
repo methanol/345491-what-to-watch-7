@@ -6,6 +6,19 @@ export const UserVerdicts = {
   AWESOME: 'Awesome',
 };
 
+export const NetworkErrors = {
+  ERROR_1: 'Ошибка при загрузке данных о фильмах',
+  ERROR_2: 'Ошибка при добавлении фильма в избранное',
+  ERROR_3: 'Сетевая ошибки при авторизации',
+  ERROR_4: 'Ошибка при авторизации пользователя',
+  ERROR_5: 'Ошибка при отправке обзора фильма',
+};
+
+export const FavoriteIndexes = {
+  ACTIVE: 1,
+  NON_ACTIVE: 0,
+};
+
 export const INITIAL_GENRE = 'All genres';
 
 export const AppRoute = {

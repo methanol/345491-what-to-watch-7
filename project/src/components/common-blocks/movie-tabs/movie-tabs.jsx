@@ -9,15 +9,15 @@ import './style.css';
 
 const availableOptions = ['Overview', 'Details', 'Reviews'];
 
-export default function MoviesTabs(props) {
+function MoviesTabs(props) {
   const {currentMovie} = props;
   const [activeOptionIndex, setActiveOption] = useState(0);
 
   function renderMovieOptions() {
 
     return availableOptions.map((it, ind) => (
-      <li className= {classNames('film-nav__item', { 'film-nav__item--active': ind === activeOptionIndex })} key = {it} onClick = {() => setActiveOption(ind)}>
-        <a className="film-nav__link">{it}</a>
+      <li className= {classNames('film-nav__item', { 'film-nav__item--active': ind === activeOptionIndex })} key = {it} onClick = {() => setActiveOption(ind)} id = {it}>
+        <span className="film-nav__link">{it}</span>
       </li>
     ));
   }
@@ -58,3 +58,6 @@ MoviesTabs.propTypes = {
     ),
   }),
 };
+
+export default MoviesTabs;
+

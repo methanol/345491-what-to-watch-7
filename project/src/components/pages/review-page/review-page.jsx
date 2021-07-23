@@ -2,13 +2,13 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import ButtonImage from '../../utils/button-image/button-image.jsx';
+import ButtonImage from '../../common-blocks/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import ReviewForm from './review-form/review-form';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 
-export default function ReviewPage(props) {
+function ReviewPage(props) {
   const params = useParams();
   const {allFilms} = props;
   const currentMovie = allFilms.find((it) => Number(it.id) === Number(params.id));
@@ -40,7 +40,7 @@ export default function ReviewPage(props) {
                   <a href="film-page.html" className="breadcrumbs__link">{currentMovie.name}</a>
                 </li>
                 <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link">Add review</a>
+                  <span className="breadcrumbs__link">Add review</span>
                 </li>
               </ul>
             </nav>
@@ -68,3 +68,5 @@ ReviewPage.propTypes = {
     }).isRequired,
   ).isRequired,
 };
+
+export default ReviewPage;

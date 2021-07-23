@@ -1,4 +1,4 @@
-import {ActionType, switchGenre, showMoreMovies, resetMoviesList, loadMoviesList, updateMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, loadFavoriteMovies, requireAuthorization, userLogout, redirectToRoute, replaceRoute, uploadReview} from './actions';
+import {ActionType, switchGenre, showMoreMovies, resetMoviesList, loadMoviesList, updateMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, loadFavoriteMovies, requireAuthorization, userLogout, redirectToRoute, replaceRoute, uploadReview, setUserAvatar} from './actions';
 
 describe('Actions', () => {
   it('action creator for genre switching', () => {
@@ -121,6 +121,13 @@ describe('Actions', () => {
     };
 
     expect(uploadReview(true)).toEqual(expectedAction);
+  });
+  it('action creator for user avatar', () => {
+    const expectedAction = {
+      type: ActionType.SET_USER_AVATAR,
+    };
+
+    expect(setUserAvatar()).toEqual(expectedAction);
   });
 });
 

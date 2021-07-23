@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function DetailTab(props) {
+function DetailTab(props) {
   const {currentMovie} = props;
 
   return (
@@ -48,3 +48,5 @@ DetailTab.propTypes = {
     released: PropTypes.number.isRequired,
   }).isRequired,
 };
+
+export default DetailTab;

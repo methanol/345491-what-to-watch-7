@@ -4,6 +4,7 @@ import {AuthorizationStatus} from '../../components/utils/constants.js';
 
 const initState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
+  userImage: '',
 };
 
 const changedState = Object.assign({}, initState);

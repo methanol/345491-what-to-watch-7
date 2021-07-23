@@ -6,7 +6,7 @@ import {switchGenre} from '../../../store/actions';
 import {INITIAL_GENRE} from '../../utils/constants';
 
 import singleMovieProp from '../single-movie-card/single-movie.prop';
-import {getAllFilms, getCurrentGenre} from '../../../store/selector';
+import {getAllFilms, getCurrentGenre} from '../../../store/selector/selector';
 import './style.css';
 
 export function GenresList(props) {
@@ -19,8 +19,8 @@ export function GenresList(props) {
   return (
     <ul className="catalog__genres-list">
       {actualGenres.map((it, ind) => (
-        <li className= {classNames('catalog__genres-item', { 'catalog__genres-item--active': ind === activeGenreIndex })} key = {it}>
-          <a className="catalog__genres-link"  onClick = {() => switchGenreAction(it)}>{it}</a>
+        <li className= {classNames('catalog__genres-item', { 'catalog__genres-item--active': ind === activeGenreIndex })} key = {it} id = {it}>
+          <a href = {`#${it}`} className="catalog__genres-link"  onClick = {() => switchGenreAction(it)}>{it}</a>
         </li>
       ))}
     </ul>

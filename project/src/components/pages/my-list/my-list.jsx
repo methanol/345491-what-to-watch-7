@@ -2,16 +2,17 @@ import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
-import ButtonImage from '../../utils/button-image/button-image.jsx';
+import ButtonImage from '../../common-blocks/button-image/button-image.jsx';
 import Logo from '../../common-blocks/logo/logo.jsx';
 import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-card';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
-import {getFavorites, getAuthorizationStatus} from '../../../store/selector';
+import {getFavorites, getAuthorizationStatus} from '../../../store/selector/selector';
 import {fetchFavoriteMovies} from '../../../store//api-actions';
+import {setUserAvatar} from '../../../store/actions';
 import {AuthorizationStatus} from '../../utils/constants';
 
-export default function MyList() {
+function MyList() {
 
   const allFilms = useSelector(getFavorites);
   const authorizationStatus = useSelector(getAuthorizationStatus);
@@ -20,10 +21,14 @@ export default function MyList() {
   const loadFavoriteMoviesAction = () => {
     dispatch(fetchFavoriteMovies());
   };
+  const setUserAvatarAction = () => {
+    dispatch(setUserAvatar());
+  };
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       loadFavoriteMoviesAction();
+      setUserAvatarAction();
     }
   }, []);
 
@@ -58,3 +63,5 @@ export default function MyList() {
     </>
   );
 }
+
+export default MyList;

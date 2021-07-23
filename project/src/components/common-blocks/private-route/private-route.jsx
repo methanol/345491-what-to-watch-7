@@ -3,9 +3,9 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 
-import {AuthorizationStatus} from '../constants';
-import {getAuthorizationStatus} from '../../../store/selector';
-import {AppRoute} from '../constants';
+import {AuthorizationStatus} from '../../utils/constants';
+import {getAuthorizationStatus} from '../../../store/selector/selector';
+import {AppRoute} from '../../utils/constants';
 
 function PrivateRoute ({render, path, exact}) {
 

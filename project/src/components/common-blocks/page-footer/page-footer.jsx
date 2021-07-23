@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Logo from '../logo/logo.jsx';
 
-export default function PageFooter() {
+function PageFooter() {
   return (
     <footer className="page-footer">
       <div className="logo">
@@ -18,3 +18,5 @@ export default function PageFooter() {
     </footer>
   );
 }
+
+export default PageFooter;

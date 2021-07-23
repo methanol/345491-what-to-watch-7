@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Logo() {
+function Logo() {
   return (
     <>
       <span className="logo__letter logo__letter--1">W</span>
@@ -9,3 +9,5 @@ export default function Logo() {
     </>
   );
 }
+
+export default Logo;

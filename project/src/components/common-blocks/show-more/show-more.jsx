@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function ShowMore(props) {
+function ShowMore(props) {
 
   return (
     <div className="catalog__more">
@@ -13,3 +13,5 @@ export default function ShowMore(props) {
 ShowMore.propTypes = {
   children: PropTypes.node,
 };
+
+export default ShowMore;

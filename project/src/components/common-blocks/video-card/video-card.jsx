@@ -2,17 +2,18 @@ import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export default function VideoCard(props) {
+function VideoCard(props) {
 
   const {previewImage, id, videoSourse, onCardHover = () => {}, onCardLeave = () => {}, handleClick = () => {}} = props;
   const videoRef = useRef(null);
   let playingTimeout;
+  const VIDEO_TIMEOUT = 1000;
 
   const setActiveMovie = () => {
     onCardHover(id);
     playingTimeout = setTimeout(() => {
       videoRef.current.play();
-    }, 1000);
+    }, VIDEO_TIMEOUT);
   };
 
   const stopActiveMovie = () => {
@@ -38,3 +39,5 @@ VideoCard.propTypes = {
   onCardLeave: PropTypes.func,
   handleClick: PropTypes.func,
 };
+
+export default VideoCard;

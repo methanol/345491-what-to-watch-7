@@ -3,7 +3,7 @@ import Moment from 'react-moment';
 import PropTypes from 'prop-types';
 
 import {useSelector, useDispatch} from 'react-redux';
-import {getReviews} from '../../../store/selector';
+import {getReviews} from '../../../store/selector/selector';
 import {fetchMovieReviews} from '../../../store/api-actions';
 
 function renderReviews(reviews) {

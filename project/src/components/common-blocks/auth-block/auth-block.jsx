@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 import {AuthorizationStatus} from '../../utils/constants';
 import {logout} from '../../../store/api-actions';
 import {AppRoute} from '../../utils/constants';
-import {getAuthorizationStatus} from '../../../store/selector';
+import {getAuthorizationStatus, getUserImage} from '../../../store/selector/selector';
 
 export function AuthBlock(props) {
-  const {authorizationStatusStateProp, onLogoutAction} = props;
+  const {authorizationStatusStateProp, userImageStateProp = '', onLogoutAction} = props;
 
   const handleClick = () => {
     onLogoutAction();
@@ -21,7 +21,7 @@ export function AuthBlock(props) {
         <li className="user-block__item">
           <div className="user-block__avatar">
             <Link to={AppRoute.MY_LIST}>
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              <img src={userImageStateProp} alt="User avatar" width="63" height="63" />
             </Link>
           </div>
         </li>
@@ -46,10 +46,12 @@ export function AuthBlock(props) {
 AuthBlock.propTypes = {
   authorizationStatusStateProp: PropTypes.string.isRequired,
   onLogoutAction: PropTypes.func.isRequired,
+  userImageStateProp: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatusStateProp: getAuthorizationStatus(state),
+  userImageStateProp: getUserImage(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

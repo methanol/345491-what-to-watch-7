@@ -16,7 +16,7 @@ export function MoviesList(props) {
     (id) => {
       setActiveMovieID(id);
     },
-    [activeMovieID],
+    [],
   );
 
   const handleMouseLeave = () => setActiveMovieID(0);

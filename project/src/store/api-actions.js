@@ -1,17 +1,23 @@
-import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout, redirectToRoute, loadFavoriteMovies, replaceRoute, updateMoviesList, uploadReview} from './actions';
+import {loadMoviesList, loadPromoMovie, loadSimilarMovie, loadMovieReview, requireAuthorization, userLogout, redirectToRoute, loadFavoriteMovies, replaceRoute, updateMoviesList, uploadReview, setUserAvatar} from './actions';
 import {APIRoute, AuthorizationStatus, AppRoute} from '../components/utils/constants';
 import { toast } from 'react-toastify';
+
+import {NetworkErrors} from '../components/utils/constants';
+
+const HttpCode = {
+  UNAUTHORIZED: 401,
+};
 
 export const fetchMoviesList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.GET_ALL_FILMS)
     .then(({data}) => dispatch(loadMoviesList(data)))
-    .catch((err) => toast.error('Ошибка при загрузке данных о фильмах'))
+    .catch((err) => toast.error(NetworkErrors.ERROR_1))
 );
 
 export const fetchPromoMovie = () => (dispatch, _getState, api) => (
   api.get(APIRoute.GET_PROMO)
     .then(({data}) => dispatch(loadPromoMovie(data)))
-    .catch((err) => toast.error('Ошибка при загрузке данных о фильмах'))
+    .catch((err) => toast.error(NetworkErrors.ERROR_1))
 );
 
 export const fetchSimilarMovies = (id) => (dispatch, _getState, api) => (
@@ -34,21 +40,25 @@ export const postFavoriteMovie = (id, status, isPromo) => (dispatch, _getState, 
     .then((favData) => {
       isPromo ? dispatch(loadPromoMovie(favData.data)) : dispatch(updateMoviesList(favData.data));
     })
-    .catch((err) => toast.error('Ошибка при добавлении фильма в избранное'))
+    .catch((err) => toast.error(NetworkErrors.ERROR_2))
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.GET_LOGIN)
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch((err) => toast.info('Вы не авторизованы на сайте'))
+    .catch((err) => err.response.status !== HttpCode.UNAUTHORIZED ? toast.error(NetworkErrors.ERROR_3) : null)
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.POST_LOGIN, {email, password})
-    .then(({data}) => localStorage.setItem('token', data.token))
+    .then(({data}) => {
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('avatar', data.avatar_url);
+      dispatch(setUserAvatar());
+    })
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(replaceRoute(AppRoute.ROOT)))
-    .catch((err) => toast.error('Ошибка при авторизации пользователя'))
+    .catch((err) => toast.error(NetworkErrors.ERROR_4))
 );
 
 export const postReview = ({filmId, comment, rating}) => (dispatch, _getState, api) => (
@@ -58,7 +68,7 @@ export const postReview = ({filmId, comment, rating}) => (dispatch, _getState, a
       dispatch(uploadReview(false));
     })
     .catch((err) => {
-      toast.error('Ошибка при отправке обзора фильма');
+      toast.error(NetworkErrors.ERROR_5);
       dispatch(uploadReview(false));
     })
 );
@@ -66,6 +76,7 @@ export const postReview = ({filmId, comment, rating}) => (dispatch, _getState, a
 export const logout = () => (dispatch, _getState, api) => (
   api.delete(APIRoute.DELETE_LOGIN)
     .then(() => localStorage.removeItem('token'))
+    .then(() => localStorage.removeItem('avatar'))
     .then(() => dispatch(userLogout()))
     .then(() => dispatch(replaceRoute(AppRoute.ROOT)))
 );
