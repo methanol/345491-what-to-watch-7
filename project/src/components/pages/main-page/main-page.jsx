@@ -11,7 +11,7 @@ import ShowMore from '../../common-blocks/show-more/show-more';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
 import {postFavoriteMovie} from '../../../store/api-actions';
-import {createGenreSelector, createShownMoviesSelector, getMoviesOnPage, getPromoFilm} from '../../../store/selector/selector';
+import {createGenreMovieSelector, createShownMoviesSelector, getMoviesOnPage, getPromoFilm} from '../../../store/selector/selector';
 import {AppRoute, FavoriteIndexes} from '../../utils/constants';
 import './main-page.css';
 
@@ -28,7 +28,7 @@ export function MainPage(props) {
     dispatch(resetMoviesList());
   };
 
-  const currentFilmsProp = useSelector(createGenreSelector);
+  const currentFilmsProp = useSelector(createGenreMovieSelector);
   const shownFilmsProp = useSelector(createShownMoviesSelector);
   const moviesOnPageProp = useSelector(getMoviesOnPage);
   const promoInfo = useSelector(getPromoFilm);

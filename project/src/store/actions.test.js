@@ -125,9 +125,10 @@ describe('Actions', () => {
   it('action creator for user avatar', () => {
     const expectedAction = {
       type: ActionType.SET_USER_AVATAR,
+      payload: '/url',
     };
 
-    expect(setUserAvatar()).toEqual(expectedAction);
+    expect(setUserAvatar('/url')).toEqual(expectedAction);
   });
 });
 

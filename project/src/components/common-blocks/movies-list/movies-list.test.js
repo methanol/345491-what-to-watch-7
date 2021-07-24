@@ -16,7 +16,7 @@ describe('Component: MoviesList', () => {
     const {getByText} = render(
       <Provider store={mockStore({})}>
         <Router history={history}>
-          <MoviesList allFilms = {camelize(allFilms)} showSimilarAction = {()=>{}} showReviewsAction = {()=>{}}/>
+          <MoviesList allFilms = {camelize(allFilms)}/>
         </Router>
       </Provider>,
     );

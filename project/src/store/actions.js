@@ -1,9 +1,9 @@
 import {createAction} from '@reduxjs/toolkit';
 
 export const ActionType = {
-  SWITCH_GENRE: 'switchGenre',
-  MORE_MOVIES: 'moreMovies',
-  RESET_MOVIES_LIST: 'resetMoviesList',
+  SWITCH_GENRE: 'data/switchGenre',
+  MORE_MOVIES: 'data/moreMovies',
+  RESET_MOVIES_LIST: 'data/resetMoviesList',
   LOAD_MOVIES_LIST: 'data/loadMoviesList',
   UPDATE_MOVIES_LIST: 'data/updateMoviesList',
   LOAD_PROMO_MOVIE: 'data/loadMoviesPromo',
@@ -54,7 +54,9 @@ export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATI
   payload: status,
 }));
 
-export const setUserAvatar = createAction(ActionType.SET_USER_AVATAR);
+export const setUserAvatar = createAction(ActionType.SET_USER_AVATAR, (url) => ({
+  payload: url,
+}));
 
 export const userLogout = createAction(ActionType.LOGOUT);
 

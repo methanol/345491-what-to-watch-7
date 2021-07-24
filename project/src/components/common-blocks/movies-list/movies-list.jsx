@@ -8,7 +8,7 @@ import VideoCard from  '../video-card/video-card';
 import {fetchSimilarMovies, fetchMovieReviews} from '../../../store/api-actions';
 
 export function MoviesList(props) {
-  const {allFilms, showSimilarAction, showReviewsAction} = props;
+  const {allFilms} = props;
 
   const [activeMovieID, setActiveMovieID] = useState(0);
 
@@ -21,13 +21,8 @@ export function MoviesList(props) {
 
   const handleMouseLeave = () => setActiveMovieID(0);
 
-  const handleMovieClick = (id) => {
-    showSimilarAction(id);
-    showReviewsAction(id);
-  };
-
   function getMovieCard(it, mouseOverHandler, mouseLeaveHandler) {
-    return (it.id !== activeMovieID) ? <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id} onMouseHover = {mouseOverHandler}/> : <VideoCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id} videoSourse = {it.previewVideoLink} onCardHover = {mouseOverHandler} onCardLeave = {mouseLeaveHandler} handleClick = {() => handleMovieClick(it.id)}/>;
+    return (it.id !== activeMovieID) ? <SingleMovieCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id} onMouseHover = {mouseOverHandler}/> : <VideoCard name = {it.name} id = {it.id} previewImage = {it.previewImage} key = {it.id} videoSourse = {it.previewVideoLink} onCardHover = {mouseOverHandler} onCardLeave = {mouseLeaveHandler} handleClick = {() => {}}/>;
   }
 
   return (
@@ -41,8 +36,6 @@ MoviesList.propTypes = {
   allFilms: PropTypes.arrayOf(
     singleMovieProp.movieProps,
   ).isRequired,
-  showSimilarAction: PropTypes.func.isRequired,
-  showReviewsAction: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

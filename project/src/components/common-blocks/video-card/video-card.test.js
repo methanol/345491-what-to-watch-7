@@ -16,16 +16,14 @@ describe('Component: VideoCard', () => {
 
   it('should render correctly', () => {
     const history = createMemoryHistory();
-    const videoClickHandle = jest.fn();
 
     const {container} = render(
       <Router history={history}>
-        <VideoCard allFilms = {camelize(allFilms)} previewImage = {'/source'} id = {1} videoSourse = '/src' onCardHover = {() => {}} onCardLeave = {() => {}} handleClick = {videoClickHandle}/>
+        <VideoCard allFilms = {camelize(allFilms)} previewImage = {'/source'} id = {1} videoSourse = '/src' onCardHover = {() => {}} onCardLeave = {() => {}}/>
       </Router>,
     );
 
     expect(container.querySelector('video')).toBeInTheDocument();
     userEvent.click(container.querySelector('video'));
-    expect(videoClickHandle).toBeCalled();
   });
 });

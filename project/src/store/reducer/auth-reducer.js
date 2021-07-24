@@ -16,12 +16,7 @@ const authReducer = (state = initState, action) => {
     case ActionType.SET_USER_AVATAR:
       return {
         ...state,
-        userImage: localStorage.getItem('avatar') ?? '',
-      };
-    case ActionType.RESET_MOVIES_LIST:
-      return {
-        ...state,
-        userImage: localStorage.getItem('avatar') ?? '',
+        userImage: action.payload,
       };
     case ActionType.LOGOUT:
       return {

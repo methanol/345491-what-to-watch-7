@@ -9,7 +9,6 @@ import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {getFavorites, getAuthorizationStatus} from '../../../store/selector/selector';
 import {fetchFavoriteMovies} from '../../../store//api-actions';
-import {setUserAvatar} from '../../../store/actions';
 import {AuthorizationStatus} from '../../utils/constants';
 
 function MyList() {
@@ -21,14 +20,10 @@ function MyList() {
   const loadFavoriteMoviesAction = () => {
     dispatch(fetchFavoriteMovies());
   };
-  const setUserAvatarAction = () => {
-    dispatch(setUserAvatar());
-  };
 
   useEffect(() => {
     if (authorizationStatus === AuthorizationStatus.AUTH) {
       loadFavoriteMoviesAction();
-      setUserAvatarAction();
     }
   }, []);
 

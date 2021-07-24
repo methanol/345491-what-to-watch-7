@@ -1,25 +1,19 @@
 import React from 'react';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import PropTypes, { string } from 'prop-types';
 import {connect} from 'react-redux';
 import {switchGenre} from '../../../store/actions';
-import {INITIAL_GENRE} from '../../utils/constants';
 
-import singleMovieProp from '../single-movie-card/single-movie.prop';
-import {getAllFilms, getCurrentGenre} from '../../../store/selector/selector';
+import {getCurrentGenre, createGenreSelector} from '../../../store/selector/selector';
 import './style.css';
 
 export function GenresList(props) {
-  const {moviesProp, currentGenreProp, switchGenreAction} = props;
-
-  const initGenres = [INITIAL_GENRE];
-  const actualGenres = initGenres.concat(moviesProp.map((it) => it.genre).filter((it, ind, arr) => arr.indexOf(it) === ind));
-  const activeGenreIndex = actualGenres.indexOf(currentGenreProp);
+  const {currentGenreProp, switchGenreAction, genresProp} = props;
 
   return (
     <ul className="catalog__genres-list">
-      {actualGenres.map((it, ind) => (
-        <li className= {classNames('catalog__genres-item', { 'catalog__genres-item--active': ind === activeGenreIndex })} key = {it} id = {it}>
+      {genresProp.map((it, ind) => (
+        <li className= {classNames('catalog__genres-item', { 'catalog__genres-item--active': it === currentGenreProp })} key = {it} id = {it}>
           <a href = {`#${it}`} className="catalog__genres-link"  onClick = {() => switchGenreAction(it)}>{it}</a>
         </li>
       ))}
@@ -28,16 +22,14 @@ export function GenresList(props) {
 }
 
 GenresList.propTypes = {
-  moviesProp: PropTypes.arrayOf(
-    singleMovieProp.movieProps,
-  ).isRequired,
   currentGenreProp: PropTypes.string.isRequired,
   switchGenreAction: PropTypes.func.isRequired,
+  genresProp: PropTypes.arrayOf(string).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currentGenreProp: getCurrentGenre(state),
-  moviesProp: getAllFilms(state),
+  genresProp: createGenreSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

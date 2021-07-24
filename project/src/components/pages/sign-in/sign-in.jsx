@@ -9,6 +9,8 @@ import PageFooter from '../../common-blocks/page-footer/page-footer.jsx';
 import {login} from '../../../store/api-actions';
 import {AppRoute, AuthorizationStatus} from '../../utils/constants';
 import {getAuthorizationStatus} from '../../../store/selector/selector';
+import { toast } from 'react-toastify';
+import {NetworkErrors} from '../../utils/constants';
 
 export function SignIn(props) {
 
@@ -20,10 +22,15 @@ export function SignIn(props) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmitAction({
-      login: loginRef.current.value,
-      password: passwordRef.current.value,
-    });
+    if (/[^\s]/.test(passwordRef.current.value))
+    {
+      onSubmitAction({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      });
+    } else {
+      toast.error(NetworkErrors.ERROR_6);
+    }
   };
 
   return (

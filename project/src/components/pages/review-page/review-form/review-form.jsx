@@ -16,7 +16,7 @@ export default function ReviewForm(props) {
   const MAX_RATING = 10;
 
   const [userReview, setUserReview] = useState({
-    rating: 5,
+    rating: 0,
     comment: '',
   });
 
@@ -43,14 +43,14 @@ export default function ReviewForm(props) {
     uploadReviewAction(true);
   };
 
-  const setUserMessage = (evt) => {
+  const handleUserMessage = (evt) => {
     setUserReview((prevState) => ({
       ...prevState,
       comment: evt.target.value,
     }));
   };
 
-  const setUserRating = (evt) => {
+  const handleUserRating = (evt) => {
     setUserReview((prevState) => ({
       ...prevState,
       rating: evt.target.value,
@@ -59,7 +59,7 @@ export default function ReviewForm(props) {
 
   const renderRatingList = (it) => (
     <React.Fragment key={it}>
-      <input className="rating__input" id={`star-${it}`} type="radio" name="rating" value={it} onChange = {setUserRating} disabled = {isReviewUploading}/>
+      <input className="rating__input" id={`star-${it}`} type="radio" name="rating" value={it} onChange = {handleUserRating} disabled = {isReviewUploading}/>
       <label className="rating__label" htmlFor={`star-${it}`}>Rating {it}</label>
     </React.Fragment>
   );
@@ -80,9 +80,25 @@ export default function ReviewForm(props) {
       </div>
 
       <div className="add-review__text">
-        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={userReview.comment} onChange = {setUserMessage} minLength = {MIN_SYMBOLS_COUNT} maxLength = {MAX_SYMBOLS_COUNT} disabled = {isReviewUploading}></textarea>
+        <textarea
+          className="add-review__textarea"
+          name="review-text" id="review-text"
+          placeholder="Review text"
+          value={userReview.comment}
+          onChange = {handleUserMessage}
+          minLength = {MIN_SYMBOLS_COUNT}
+          maxLength = {MAX_SYMBOLS_COUNT}
+          disabled = {isReviewUploading}
+        >
+        </textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit" disabled = {!checkValidForm()}>Post</button>
+          <button
+            className="add-review__btn"
+            type="submit"
+            disabled = {!checkValidForm()}
+          >
+              Post
+          </button>
         </div>
       </div>
     </form>

@@ -22,7 +22,7 @@ describe('Async operations', () => {
 
     return checkAuthLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.REQUIRED_AUTHORIZATION,
           payload: AuthorizationStatus.AUTH,
@@ -248,9 +248,8 @@ describe('Async operations', () => {
           type: ActionType.LOGOUT,
         });
 
-        expect(Storage.prototype.removeItem).toBeCalledTimes(2);
+        expect(Storage.prototype.removeItem).toBeCalledTimes(1);
         expect(Storage.prototype.removeItem).nthCalledWith(1, 'token');
-        expect(Storage.prototype.removeItem).nthCalledWith(2, 'avatar');
       });
   });
 

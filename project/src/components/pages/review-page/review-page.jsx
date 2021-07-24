@@ -37,7 +37,7 @@ function ReviewPage(props) {
             <nav className="breadcrumbs">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <a href="film-page.html" className="breadcrumbs__link">{currentMovie.name}</a>
+                  <a href={`/films/${currentMovie.id}`} className="breadcrumbs__link">{currentMovie.name}</a>
                 </li>
                 <li className="breadcrumbs__item">
                   <span className="breadcrumbs__link">Add review</span>

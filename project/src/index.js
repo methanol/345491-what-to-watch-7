@@ -6,6 +6,8 @@ import {createAPI} from './api';
 import {configureStore} from '@reduxjs/toolkit';
 import {Router as BrowserRouter} from 'react-router-dom';
 import browserHistory from './browser-history';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import rootReducer from './store/reducer/root-reducer';
 import {fetchMoviesList, fetchPromoMovie, checkAuth} from './store/api-actions';
@@ -36,6 +38,17 @@ ReactDOM.render(
     <Provider store ={store}>
       <BrowserRouter history={browserHistory}>
         <App/>
+        <ToastContainer
+          position="top-right"
+          // autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

@@ -12,7 +12,6 @@ import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {fetchSimilarMovies, fetchMovieReviews, postFavoriteMovie, fetchFavoriteMovies} from '../../../store/api-actions';
-import {setUserAvatar} from '../../../store/actions';
 import {AuthorizationStatus, FavoriteIndexes} from '../../utils/constants';
 import {getSimilarFilms, getAuthorizationStatus} from '../../../store/selector/selector';
 import './movie-page.css';
@@ -38,14 +37,10 @@ export function MoviePage(props) {
   const loadFavoriteMoviesAction = () => {
     dispatch(fetchFavoriteMovies());
   };
-  const setUserAvatarAction = () => {
-    dispatch(setUserAvatar());
-  };
 
   useEffect(() => {
     showSimilarAction(params.id);
     showReviewsAction(params.id);
-    setUserAvatarAction();
   }, [params.id]);
 
   const handleFavoriteClick = () => {

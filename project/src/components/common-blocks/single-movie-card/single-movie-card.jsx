@@ -15,7 +15,7 @@ export function SingleMovieCard(props) {
     dispatch(fetchMovieReviews(ind));
   };
 
-  const setActiveMovie = () => onMouseHover ? onMouseHover(id) : null;
+  const handleActiveMovie = () => onMouseHover ? onMouseHover(id) : null;
 
   const handleMovieClick = () => {
     showSimilarAction(id);
@@ -23,7 +23,7 @@ export function SingleMovieCard(props) {
   };
 
   return (
-    <article className="small-film-card catalog__films-card" onMouseOver = {setActiveMovie} onClick = {handleMovieClick}>
+    <article className="small-film-card catalog__films-card" onMouseOver = {handleActiveMovie} onClick = {handleMovieClick}>
       <Link to={`/films/${id}`}>
         <div className="small-film-card__image">
           <img src={previewImage} alt={name} width="280" height="175" />

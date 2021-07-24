@@ -16,10 +16,21 @@ export const getDataLoaded = (state) => state.movie.isDataLoaded;
 export const getCurrentGenre = (state) => state.movie.currentGenre;
 export const getMoviesOnPage = (state) => state.movie.moviesOnPage;
 
-export const createGenreSelector = createSelector(
+export const createGenreMovieSelector = createSelector(
   getAllFilms,
   getCurrentGenre,
   (films, genre) => (genre === INITIAL_GENRE) ? films : films.filter((it) => it.genre === genre),
+);
+
+const LIMIT = 11;
+
+export const createGenreSelector = createSelector(
+  getAllFilms,
+  (films) => {
+    const actualGenresAll = Array.of(INITIAL_GENRE).concat(films.map((it) => it.genre).filter((it, ind, arr) => arr.indexOf(it) === ind));
+    const actualGenres = actualGenresAll.slice(0, LIMIT);
+    return actualGenres;
+  },
 );
 
 export const createShownMoviesSelector = createSelector(
