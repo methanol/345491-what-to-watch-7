@@ -11,8 +11,8 @@ import ShowMore from '../../common-blocks/show-more/show-more';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {showMoreMovies, resetMoviesList} from '../../../store/actions';
 import {postFavoriteMovie} from '../../../store/api-actions';
-import {createGenreMovieSelector, createShownMoviesSelector, getMoviesOnPage, getPromoFilm} from '../../../store/selector/selector';
-import {AppRoute, FavoriteIndexes} from '../../utils/constants';
+import {createGenreMovieSelector, createShownMoviesSelector, getMoviesOnPage, getPromoFilm, getAuthorizationStatus} from '../../../store/selector/selector';
+import {AppRoute, FavoriteIndexes, AuthorizationStatus} from '../../utils/constants';
 import './main-page.css';
 
 export function MainPage(props) {
@@ -32,6 +32,7 @@ export function MainPage(props) {
   const shownFilmsProp = useSelector(createShownMoviesSelector);
   const moviesOnPageProp = useSelector(getMoviesOnPage);
   const promoInfo = useSelector(getPromoFilm);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const handleShowMoreClick = () => {
     showMoreAction();
@@ -93,7 +94,7 @@ export function MainPage(props) {
                 </Link>
 
                 <button className="btn btn--list film-card__button" type="button" onClick = {handleFavoriteClick}>
-                  {!promoInfo.isFavorite ?
+                  {(!promoInfo.isFavorite|| authorizationStatus !== AuthorizationStatus.AUTH) ?
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>
                     </svg> :
