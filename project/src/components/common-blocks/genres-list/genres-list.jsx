@@ -14,7 +14,7 @@ export function GenresList(props) {
     <ul className="catalog__genres-list">
       {genresProp.map((it, ind) => (
         <li className= {classNames('catalog__genres-item', { 'catalog__genres-item--active': it === currentGenreProp })} key = {it} id = {it}>
-          <a href = {`#${it}`} className="catalog__genres-link"  onClick = {() => switchGenreAction(it)}>{it}</a>
+          <a href = {`/345491-what-to-watch-7/#${it}`} className="catalog__genres-link"  onClick = {() => switchGenreAction(it)}>{it}</a>
         </li>
       ))}
     </ul>

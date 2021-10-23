@@ -14,6 +14,7 @@ import {fetchMoviesList, fetchPromoMovie, checkAuth} from './store/api-actions';
 import {requireAuthorization} from './store/actions';
 import {AuthorizationStatus} from './components/utils/constants';
 import {redirect, replace} from './store/middleware/redirect';
+import './css/main.min.css';
 
 const api = createAPI(
   () => store.dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)),

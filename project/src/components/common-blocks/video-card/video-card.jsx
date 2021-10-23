@@ -23,7 +23,7 @@ function VideoCard(props) {
   };
 
   return (
-    <Link to={`/films/${id}`} className="small-film-card catalog__films-card" >
+    <Link to={`/345491-what-to-watch-7/films/${id}`} className="small-film-card catalog__films-card" >
       <video ref = {videoRef} src = {videoSourse} poster = {previewImage} width="280" height="175" onMouseOver = {handleActiveMovie} onMouseLeave = {handleStopActiveMovie} onClick = {handleStopActiveMovie} muted className="small-film-card__image">
       </video>
     </Link>

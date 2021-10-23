@@ -7,6 +7,7 @@ import Logo from '../../common-blocks/logo/logo.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import ReviewForm from './review-form/review-form';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
+import {AppRoute} from '../../utils/constants';
 
 function ReviewPage(props) {
   const params = useParams();
@@ -29,7 +30,7 @@ function ReviewPage(props) {
 
           <header className="page-header">
             <div className="logo">
-              <Link to='/' className="logo__link">
+              <Link to={AppRoute.ROOT} className="logo__link">
                 <Logo/>
               </Link>
             </div>
@@ -37,7 +38,7 @@ function ReviewPage(props) {
             <nav className="breadcrumbs">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <a href={`/films/${currentMovie.id}`} className="breadcrumbs__link">{currentMovie.name}</a>
+                  <a href={`/345491-what-to-watch-7/films/${currentMovie.id}`} className="breadcrumbs__link">{currentMovie.name}</a>
                 </li>
                 <li className="breadcrumbs__item">
                   <span className="breadcrumbs__link">Add review</span>

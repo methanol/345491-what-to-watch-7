@@ -9,7 +9,7 @@ import SingleMovieCard from '../../common-blocks/single-movie-card/single-movie-
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {getFavorites, getAuthorizationStatus} from '../../../store/selector/selector';
 import {fetchFavoriteMovies} from '../../../store//api-actions';
-import {AuthorizationStatus} from '../../utils/constants';
+import {AuthorizationStatus, AppRoute} from '../../utils/constants';
 
 function MyList() {
 
@@ -36,7 +36,7 @@ function MyList() {
       <div className="user-page">
         <header className="page-header user-page__head">
           <div className="logo">
-            <Link to='/' className="logo__link">
+            <Link to={AppRoute.ROOT} className="logo__link">
               <Logo/>
             </Link>
           </div>

@@ -12,7 +12,7 @@ import MoviesTabs from '../../common-blocks/movie-tabs/movie-tabs';
 import singleMovieProp from '../../common-blocks/single-movie-card/single-movie.prop';
 import AuthBlock from '../../common-blocks/auth-block/auth-block';
 import {fetchSimilarMovies, fetchMovieReviews, postFavoriteMovie, fetchFavoriteMovies} from '../../../store/api-actions';
-import {AuthorizationStatus, FavoriteIndexes} from '../../utils/constants';
+import {AuthorizationStatus, FavoriteIndexes, AppRoute} from '../../utils/constants';
 import {getSimilarFilms, getAuthorizationStatus} from '../../../store/selector/selector';
 import './movie-page.css';
 
@@ -65,7 +65,7 @@ export function MoviePage(props) {
 
           <header className="page-header film-card__head">
             <div className="logo">
-              <Link to='/' className="logo__link">
+              <Link to={AppRoute.ROOT} className="logo__link">
                 <Logo/>
               </Link>
             </div>
@@ -81,7 +81,7 @@ export function MoviePage(props) {
               </p>
 
               <div className="film-card__buttons">
-                <Link className="film-card__button button-caption" to={`/player/${params.id}`}>
+                <Link className="film-card__button button-caption" to={`/345491-what-to-watch-7/player/${params.id}`}>
                   <button className="btn btn--play film-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
@@ -100,7 +100,7 @@ export function MoviePage(props) {
                   <span>My list</span>
                 </button>
                 {authorizationStatus === AuthorizationStatus.AUTH ?
-                  <Link to={`/films/${params.id}/review`} className="btn film-card__button">
+                  <Link to={`/345491-what-to-watch-7/films/${params.id}/review`} className="btn film-card__button">
                     Add review
                   </Link> : null}
               </div>

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ButtonImage from '../../common-blocks/button-image/button-image.jsx';
 import NotFoundScreen from '../not-found-page/not-found-page.jsx';
 import MoonLoader from 'react-spinners/MoonLoader';
+import {AppRoute} from '../../utils/constants';
 import './player.css';
 
 export default function Player(props) {
@@ -78,7 +79,7 @@ export default function Player(props) {
 
       <div className="player">
         <video ref = {videoRef} src = {currentMovie.videoLink} className="player__video" poster={currentMovie.backgroundImage} onTimeUpdate = {updateProgressBar}></video>
-        <Link to='/'>
+        <Link to={AppRoute.ROOT}>
           <button type="button" className="player__exit" onClick = {() => videoRef.current.pause()}>Exit</button>
         </Link>
 

@@ -78,7 +78,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 export const postReview = ({filmId, comment, rating}) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.POST_COMMENTS}/${filmId}`, {comment, rating})
     .then(() => {
-      dispatch(redirectToRoute(`${APIRoute.GET_FILM}/${filmId}`));
+      dispatch(redirectToRoute(`/345491-what-to-watch-7/films/${filmId}`));
       dispatch(uploadReview(false));
     })
     .catch((err) => {

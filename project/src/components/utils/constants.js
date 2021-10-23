@@ -26,12 +26,12 @@ export const FavoriteIndexes = {
 export const INITIAL_GENRE = 'All genres';
 
 export const AppRoute = {
-  ROOT: '/',
-  LOGIN: '/login',
-  MY_LIST: '/mylist',
-  FILM: '/films/:id',
-  FILM_REVIEW: '/films/:id/review',
-  FILM_PLAYER: '/player/:id',
+  ROOT: '/345491-what-to-watch-7/',
+  LOGIN: '/345491-what-to-watch-7/login',
+  MY_LIST: '/345491-what-to-watch-7/mylist',
+  FILM: '/345491-what-to-watch-7/films/:id',
+  FILM_REVIEW: '/345491-what-to-watch-7/films/:id/review',
+  FILM_PLAYER: '/345491-what-to-watch-7/player',
 };
 
 export const AuthorizationStatus = {
