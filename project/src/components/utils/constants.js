@@ -31,7 +31,7 @@ export const AppRoute = {
   MY_LIST: '/345491-what-to-watch-7/mylist',
   FILM: '/345491-what-to-watch-7/films/:id',
   FILM_REVIEW: '/345491-what-to-watch-7/films/:id/review',
-  FILM_PLAYER: '/345491-what-to-watch-7/player',
+  FILM_PLAYER: '/345491-what-to-watch-7/player/:id',
 };
 
 export const AuthorizationStatus = {
